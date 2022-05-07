@@ -1,20 +1,43 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
+
+import { useQuery } from "react-query";
+import { getRecords } from "../api";
+
 function Test() {
+  const deviceId = "6276b3031269a1c923ff50be";
+  const { data: channel1 } = useQuery(
+    "Records1",
+    () => getRecords(deviceId, "channel1"),
+    {
+      initialData: [],
+    }
+  );
+  const { data: channel3 } = useQuery(
+    "Records2",
+    () => getRecords(deviceId, "channel3"),
+    {
+      initialData: [],
+    }
+  );
+
   const series = [
     {
-      name: "series1",
-      data: [31, 40, 28, 51, 42, 109, 100],
+      name: "channel1",
+      data: channel1.map(({ timestamp, value }) => ({
+        x: timestamp,
+        y: value,
+      })),
     },
     {
-      name: "series2",
-      data: [11, 32, 45, 32, 34, 52, 41],
-    },
-    {
-      name: "series3",
-      data: [10, 32, 35, 34, 64, 12, 31],
+      name: "channel3",
+      data: channel3.map(({ timestamp, value }) => ({
+        x: timestamp,
+        y: value,
+      })),
     },
   ];
+
   const options = {
     chart: {
       height: 350,
@@ -28,15 +51,6 @@ function Test() {
     },
     xaxis: {
       type: "datetime",
-      categories: [
-        "2018-09-19T00:00:00.000Z",
-        "2018-09-19T01:30:00.000Z",
-        "2018-09-19T02:30:00.000Z",
-        "2018-09-19T03:30:00.000Z",
-        "2018-09-19T04:30:00.000Z",
-        "2018-09-19T05:30:00.000Z",
-        "2018-09-19T06:30:00.000Z",
-      ],
     },
     tooltip: {
       x: {

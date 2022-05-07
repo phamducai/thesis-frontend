@@ -1,23 +1,14 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
+import { getRooms } from "../api";
+import { useQuery } from "react-query";
 
 import { Stack, Grid } from "@mui/material";
 
 import RoomWidget from "../components/RoomWidget";
 
 export default function Rooms() {
-  const [rooms, setRooms] = useState([]);
+  const { data: rooms } = useQuery("Rooms", getRooms, { initialData: [] });
 
-  useEffect(() => {
-    getRooms();
-
-    // eslint-disable-next-line
-  }, []);
-  async function getRooms() {
-    const { data } = await axios.get("/room");
-    console.log(data);
-    setRooms(data);
-  }
   return (
     <Stack>
       <Stack sx={{ height: "200px", bgcolor: "gray" }}>BuildInfoing </Stack>

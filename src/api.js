@@ -51,3 +51,8 @@ export async function deleteDeviceById(deviceId) {
   const { data } = await axios.delete("/device/" + deviceId);
   return data;
 }
+
+export async function getRecords(deviceId, attribute) {
+  const { data } = await axios.get("/record/" + deviceId +"/"+ attribute)
+  return data;
+}
