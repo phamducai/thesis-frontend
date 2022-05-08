@@ -40,14 +40,16 @@ export default function Sensor() {
       <TableBody>
         {devices.map((device, index) => (
           <TableRow key={index}>
-            <TableCell>{device.name}</TableCell>
+            <TableCell>{device.attributes.temp}</TableCell>
+            <TableCell>{device.attributes.humidity}</TableCell>
+            <TableCell>{device.attributes.airquality}</TableCell>
 
             <TableCell>
               <Button
                 color="primary"
                 variant="contained"
                 component={Link}
-                to={"/test"}
+                to={"/"}
               >
                 <ListItemIcon>
                   <VisibilityIcon />
