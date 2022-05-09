@@ -5,13 +5,14 @@ import { useQuery } from "react-query";
 import { Stack, Grid } from "@mui/material";
 
 import RoomWidget from "../components/RoomWidget";
+// import HeadAde from "../components/HeadAde";
 
 export default function Rooms() {
   const { data: rooms } = useQuery("Rooms", getRooms, { initialData: [] });
 
   return (
     <Stack>
-      <Stack sx={{ height: "200px", bgcolor: "gray" }}>BuildInfoing </Stack>
+      <Stack sx={{ height: "200px", bgcolor: "gray" }}>home information </Stack>
 
       <Grid container spacing={2} sx={{ flexGrow: 1 }}>
         {rooms.map((room, index) => (

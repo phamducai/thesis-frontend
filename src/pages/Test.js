@@ -1,11 +1,13 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 
+import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getRecords } from "../api";
 
 function Test() {
-  const deviceId = "6276b3031269a1c923ff50be";
+  const { deviceId } = useParams();
+
   const { data: channel1 } = useQuery(
     "Records1",
     () => getRecords(deviceId, "channel1"),
@@ -20,17 +22,15 @@ function Test() {
       initialData: [],
     }
   );
-
+  console.log(channel1);
   const series = [
     {
-      name: "channel1",
       data: channel1.map(({ timestamp, value }) => ({
         x: timestamp,
         y: value,
       })),
     },
     {
-      name: "channel3",
       data: channel3.map(({ timestamp, value }) => ({
         x: timestamp,
         y: value,
@@ -66,7 +66,7 @@ function Test() {
         series={series}
         type="area"
         height={350}
-      />{" "}
+      />
       <ReactApexChart
         options={options}
         series={series}
