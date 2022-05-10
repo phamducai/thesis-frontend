@@ -5,26 +5,25 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getRecords } from "../../api";
 
-function AdeRelayChart() {
+function SensorChart() {
   const { deviceId } = useParams();
-
-  const { data: vrms } = useQuery(
+  const { data: temp } = useQuery(
     "Records1",
-    () => getRecords(deviceId, "vrms"),
+    () => getRecords(deviceId, "temp"),
     {
       initialData: [],
     }
   );
-  const { data: irms } = useQuery(
+  const { data: humidity } = useQuery(
     "Records2",
-    () => getRecords(deviceId, "irms"),
+    () => getRecords(deviceId, "humidity"),
     {
       initialData: [],
     }
   );
-  const { data: energy } = useQuery(
+  const { data: airquality } = useQuery(
     "Records3",
-    () => getRecords(deviceId, "energy"),
+    () => getRecords(deviceId, "airquality"),
     {
       initialData: [],
     }
@@ -32,28 +31,27 @@ function AdeRelayChart() {
 
   const series = [
     {
-      name: "Vrms",
-      data: vrms.map(({ timestamp, value }) => ({
+      name: "Temp",
+      data: temp.map(({ timestamp, value }) => ({
         x: timestamp,
         y: value,
       })),
     },
     {
-      name: "Irms",
-      data: irms.map(({ timestamp, value }) => ({
+      name: "humidity",
+      data: humidity.map(({ timestamp, value }) => ({
         x: timestamp,
         y: value,
       })),
     },
     {
-      name: "Energy",
-      data: energy.map(({ timestamp, value }) => ({
+      name: "airquality",
+      data: airquality.map(({ timestamp, value }) => ({
         x: timestamp,
         y: value,
       })),
     },
   ];
-
   const options = {
     chart: {
       height: 350,
@@ -74,7 +72,6 @@ function AdeRelayChart() {
       },
     },
   };
-
   return (
     <React.Fragment>
       <ReactApexChart
@@ -93,4 +90,4 @@ function AdeRelayChart() {
   );
 }
 
-export default AdeRelayChart;
+export default SensorChart;

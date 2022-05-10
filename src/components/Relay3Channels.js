@@ -40,14 +40,16 @@ export default function Relay3Channel() {
       <TableBody>
         {devices.map((device, index) => (
           <TableRow key={index}>
-            <TableCell>{device.name}</TableCell>
+            <TableCell>{device.attributes.namechannel1}</TableCell>
+            <TableCell>{device.attributes.namechannel2}</TableCell>
+            <TableCell>{device.attributes.namechannel3}</TableCell>
 
             <TableCell>
               <Button
                 color="primary"
                 variant="contained"
                 component={Link}
-                to={"/test"}
+                to={`/test/${device._id}`}
               >
                 <ListItemIcon>
                   <VisibilityIcon />

@@ -26,6 +26,9 @@ import Devices from "./pages/Devices";
 import Test from "./pages/Test";
 import DeviceEdit from "./pages/DeviceEdit";
 import Chart from "./components/Chart";
+import AdeRelayChart from "./components/Chart/AderelayChart";
+import SensorChart from "./components/Chart/SensorChart";
+
 function App() {
   const navigate = useNavigate();
 
@@ -74,7 +77,9 @@ function App() {
         <Stack sx={{ flexGrow: 1 }}>
           <Routes>
             <Route path="home" element={<Rooms />} />
-            <Route path="test" element={<Test />} />
+            <Route path="test/:deviceId" element={<Test />} />
+            <Route path="Ade/:deviceId" element={<AdeRelayChart />} />
+            <Route path="Sensor/:deviceId" element={<SensorChart />} />
             <Route path="chart" element={<Chart />} />
             <Route path="room/:roomId" element={<Devices />} />
             <Route path="device/:deviceId" element={<DeviceEdit />} />

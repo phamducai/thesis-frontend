@@ -38,16 +38,20 @@ export default function RelayAde() {
   return (
     <Table>
       <TableBody>
-        {devices.map((device, index) => (
-          <TableRow key={index}>
+        {devices.map((device, indexx) => (
+          <TableRow key={indexx}>
             <TableCell>{device.name}</TableCell>
+            <TableCell>{device.attributes?.channels.vrms}</TableCell>
+            <TableCell>{device.attributes?.channels.irms}</TableCell>
+            <TableCell>{device.attributes?.power}</TableCell>
+            <TableCell>{device.attributes?.channels.energy}</TableCell>
 
             <TableCell>
               <Button
                 color="primary"
                 variant="contained"
                 component={Link}
-                to={"/test"}
+                to={`/Ade/${device._id}`}
               >
                 <ListItemIcon>
                   <VisibilityIcon />
