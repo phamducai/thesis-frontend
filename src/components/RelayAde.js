@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 
-import { Link, useParams } from "react-router-dom";
+import { Link,useNavigate, useParams } from "react-router-dom";
 
 import {
   Table,
@@ -14,9 +14,11 @@ import {
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
-import { getDevices, deleteDeviceById } from "../api";
+import { getDevices, deleteDeviceById,updateDeviceStatusById  } from "../api";
+
 
 export default function RelayAde() {
+  let navigate = useNavigate();
   const { roomId } = useParams();
   const { data: devices } = useQuery(
     "RelayAdes",
@@ -30,9 +32,16 @@ export default function RelayAde() {
       queryClient.invalidateQueries("RelayAdes");
     },
   });
+  
 
   function handleDelete(deviceId) {
     mutation.mutate(deviceId);
+  }
+
+  function handleUpdata(deviceData) {
+    deviceData.status ? deviceData.status =false : deviceData.status =true
+     updateDeviceStatusById(deviceData);
+     navigate("/room/"+roomId);
   }
 
   return (
@@ -41,9 +50,16 @@ export default function RelayAde() {
         {devices.map((device, indexx) => (
           <TableRow key={indexx}>
             <TableCell>{device.name}</TableCell>
+            <TableCell>
+              <Button  onClick={()=>{handleUpdata(device)}}>{device?.status ? <Button  variant="contained"  color="primary">ON</Button>:<Button  variant="contained"   color="error">Off</Button>}
+              
+              </Button>
+            
+              </TableCell>
             <TableCell>{device.attributes?.channels.vrms}</TableCell>
+           
             <TableCell>{device.attributes?.channels.irms}</TableCell>
-            <TableCell>{device.attributes?.power}</TableCell>
+            <TableCell>{device.attributes?.channels.power}</TableCell>
             <TableCell>{device.attributes?.channels.energy}</TableCell>
 
             <TableCell>

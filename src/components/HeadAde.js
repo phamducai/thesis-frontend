@@ -12,20 +12,10 @@ import {
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { getDeviceById } from "../api";
 export default function HeadAde() {
-  const deviceId = "6278c48a12ccdde504ae8f3e";
-  // const [devices, setDevices] = React.useState();
-
-  // React.useEffect(() => {
-  //   const loaddevice = async () => {
-  //     const response = await getDeviceById(deviceId);
-  //     setDevices(response.data);
-  //   };
-  //   loaddevice();
-  // }, []);
-
+  const deviceId = "627a8d7b09701995f0db629e";
   const { data: devices } = useQuery(
-    "RelayAdes",
-    () => getDeviceById(deviceId, "RelayAdes"),
+    "ADE",
+    () => getDeviceById(deviceId, "ADE"),
     { initialData: [] }
   );
   return (
@@ -51,7 +41,7 @@ export default function HeadAde() {
               color="secondary"
               variant="contained"
               component={Link}
-              to={`/device/${devices._id}`}
+              to={`/HeadAdeedit/${devices._id}`}
             >
               Edit
             </Button>

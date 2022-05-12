@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 
-import { Link, useParams } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 
 import {
   Table,
@@ -9,25 +9,24 @@ import {
   TableCell,
   TableRow,
   Button,
-  ListItemIcon,
 } from "@mui/material";
 
-import VisibilityIcon from "@mui/icons-material/Visibility";
 
-import { getDevices, deleteDeviceById } from "../api";
 
-export default function Sensor() {
-  const { roomId } = useParams();
+import { getDevices, deleteDeviceById } from "../../api";
+
+export default function RelayAdeNoRoom() {
+    const { deviceId } = useParams();
   const { data: devices } = useQuery(
-    "Sensors",
-    () => getDevices({ params: { type: "Sensor", refRoom: roomId } }),
+    "device",
+    () => getDevices(deviceId, "device"),
     { initialData: [] }
   );
 
   const queryClient = useQueryClient();
   const mutation = useMutation(deleteDeviceById, {
     onSuccess: () => {
-      queryClient.invalidateQueries("Sensors");
+      queryClient.invalidateQueries("device");
     },
   });
 
@@ -41,20 +40,12 @@ export default function Sensor() {
         {devices.map((device, indexx) => (
           <TableRow key={indexx}>
             <TableCell>{device.name}</TableCell>
-            <TableCell>{device.attributes?.channels.temp}</TableCell>
-          <TableCell>{device.attributes?.channels.humidity}</TableCell>
-          <TableCell>{device.attributes?.channels.airquality}</TableCell>
+            <TableCell>{device?.name1}</TableCell>
+            <TableCell>{device?.name2}</TableCell>
+            <TableCell>{device.type}</TableCell>
+            <TableCell>{device._id}</TableCell>
             <TableCell>
-              <Button
-                color="primary"
-                variant="contained"
-                component={Link}
-                to={`/Sensor/${device._id}`}
-              >
-                <ListItemIcon>
-                  <VisibilityIcon />
-                </ListItemIcon>
-              </Button>
+             
               <Button
                 color="secondary"
                 variant="contained"

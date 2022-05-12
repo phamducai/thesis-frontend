@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 import {
   Dialog,
   DialogTitle,
@@ -24,15 +24,17 @@ export default function RoomEditDialog({
   function handleChangeNameField(event) {
     setNameField(event.target.value);
   }
-
+  let navigate = useNavigate();
   async function handleSave() {
     await updateRoomById(room._id, { name: nameField });
     handleClose();
+    navigate("/")
   }
 
   async function handleDelete() {
     await deleteRoomById(room._id);
     handleClose();
+    navigate("/")
   }
 
   return (

@@ -16,21 +16,21 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 
 import { getDevices, deleteDeviceById } from "../api";
 
-export default function Sensor() {
+
+export default function AdeRoom() {
   const { roomId } = useParams();
   const { data: devices } = useQuery(
-    "Sensors",
-    () => getDevices({ params: { type: "Sensor", refRoom: roomId } }),
+    "AdeRooms",
+    () => getDevices({ params: { type: "AdeRoom", refRoom: roomId } }),
     { initialData: [] }
   );
-
   const queryClient = useQueryClient();
   const mutation = useMutation(deleteDeviceById, {
     onSuccess: () => {
-      queryClient.invalidateQueries("Sensors");
+      queryClient.invalidateQueries("AdeRooms");
     },
   });
-
+  
   function handleDelete(deviceId) {
     mutation.mutate(deviceId);
   }
@@ -38,18 +38,18 @@ export default function Sensor() {
   return (
     <Table>
       <TableBody>
-        {devices.map((device, indexx) => (
-          <TableRow key={indexx}>
+        {devices.map((device, indexxxx) => (
+          <TableRow key={indexxxx}>
             <TableCell>{device.name}</TableCell>
-            <TableCell>{device.attributes?.channels.temp}</TableCell>
-          <TableCell>{device.attributes?.channels.humidity}</TableCell>
-          <TableCell>{device.attributes?.channels.airquality}</TableCell>
+            <TableCell>{device.attributes?.channels.vrms}</TableCell>
+            <TableCell>{device.attributes?.channels.irms}</TableCell>
+            <TableCell>{device.attributes?.channels.energy}</TableCell>
             <TableCell>
               <Button
                 color="primary"
                 variant="contained"
                 component={Link}
-                to={`/Sensor/${device._id}`}
+                to={`/Ade/${device._id}`}
               >
                 <ListItemIcon>
                   <VisibilityIcon />

@@ -80,12 +80,7 @@ function SensorChart() {
         type="area"
         height={350}
       />
-      <ReactApexChart
-        options={options}
-        series={series}
-        type="bar"
-        height={350}
-      />
+    
     </React.Fragment>
   );
 }

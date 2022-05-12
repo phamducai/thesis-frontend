@@ -28,6 +28,8 @@ import DeviceEdit from "./pages/DeviceEdit";
 import Chart from "./components/Chart";
 import AdeRelayChart from "./components/Chart/AderelayChart";
 import SensorChart from "./components/Chart/SensorChart";
+import Relay3ChannelsEdit from './pages/Relay3ChannelsEdit'
+import HeadAdeedit from "./pages/HeadAdeedit"; 
 
 function App() {
   const navigate = useNavigate();
@@ -83,7 +85,12 @@ function App() {
             <Route path="chart" element={<Chart />} />
             <Route path="room/:roomId" element={<Devices />} />
             <Route path="device/:deviceId" element={<DeviceEdit />} />
+            <Route path="Relay3ChannelsEdit/:deviceId" element={<Relay3ChannelsEdit />} />
+          
             <Route path="/" element={<Navigate to="/home" />} />
+            <Route path="HeadAdeedit/:deviceId" element={<HeadAdeedit />} />
+            
+            
           </Routes>
         </Stack>
       </Stack>
