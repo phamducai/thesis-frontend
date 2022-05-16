@@ -8,6 +8,7 @@ import {
   TableRow,
   Button,
   ListItemIcon,
+  TableHead,
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { getDeviceById } from "../api";
@@ -20,18 +21,28 @@ export default function HeadAde() {
   );
   return (
     <Table>
+<TableHead>
+  <TableRow>
+    <TableCell>Home Name</TableCell>
+    <TableCell>Dien Ap</TableCell>
+    <TableCell>Dong dien</TableCell>
+    
+    <TableCell>Tieu thu</TableCell>
+    </TableRow>
+    </TableHead>
       <TableBody>
         <TableRow>
           <TableCell>{devices.name}</TableCell>
           <TableCell>{devices.attributes?.channels.vrms}</TableCell>
           <TableCell>{devices.attributes?.channels.irms}</TableCell>
           <TableCell>{devices.attributes?.channels.energy}</TableCell>
+         
           <TableCell>
             <Button
               color="primary"
               variant="contained"
               component={Link}
-              to={`/Ade/${devices._id}`}
+              to={`/Adechart/${devices._id}`}
             >
               <ListItemIcon>
                 <VisibilityIcon />

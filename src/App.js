@@ -30,7 +30,7 @@ import AdeRelayChart from "./components/Chart/AderelayChart";
 import SensorChart from "./components/Chart/SensorChart";
 import Relay3ChannelsEdit from './pages/Relay3ChannelsEdit'
 import HeadAdeedit from "./pages/HeadAdeedit"; 
-
+import AdeChart from "./components/Chart/AdeChart";
 function App() {
   const navigate = useNavigate();
 
@@ -70,7 +70,7 @@ function App() {
                 <ListItemIcon>
                   <DraftsIcon />
                 </ListItemIcon>
-                <ListItemText primary="Test" />
+                <ListItemText primary="All Device" />
               </ListItemButton>
             </ListItem>
           </List>
@@ -89,7 +89,7 @@ function App() {
           
             <Route path="/" element={<Navigate to="/home" />} />
             <Route path="HeadAdeedit/:deviceId" element={<HeadAdeedit />} />
-            
+            <Route path="Adechart/:deviceId" element={<AdeChart />} />
             
           </Routes>
         </Stack>

@@ -17,6 +17,8 @@ import { getDevices, deleteDeviceById } from "../../api";
 
 export default function RelayAdeNoRoom() {
     const { deviceId } = useParams();
+    
+
   const { data: devices } = useQuery(
     "device",
     () => getDevices(deviceId, "device"),
@@ -37,15 +39,16 @@ export default function RelayAdeNoRoom() {
   return (
     <Table>
       <TableBody>
+ 
+
         {devices.map((device, indexx) => (
           <TableRow key={indexx}>
             <TableCell>{device.name}</TableCell>
             <TableCell>{device?.name1}</TableCell>
             <TableCell>{device?.name2}</TableCell>
-            <TableCell>{device.type}</TableCell>
-            <TableCell>{device._id}</TableCell>
+            <TableCell>{device?.type}</TableCell>
+            <TableCell>{device?.refRoom}</TableCell>
             <TableCell>
-             
               <Button
                 color="secondary"
                 variant="contained"

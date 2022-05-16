@@ -1,12 +1,12 @@
-import React ,{useState,useEffect}from "react";
+import React from "react";
 import ReactApexChart from "react-apexcharts";
 
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getRecords } from "../../api";
-function AdeRelayChart() {
-  const { deviceId } = useParams();
 
+function AdeChart() {
+  const { deviceId } = useParams();
 
   const { data: vrms } = useQuery(
     "Records1",
@@ -29,13 +29,7 @@ function AdeRelayChart() {
       initialData: [],
     }
   );
-  const { data: power } = useQuery(
-    "Records4",
-    () => getRecords(deviceId, "power"),
-    {
-      initialData: [],
-    }
-  );
+  
 
   const series = [
     {
@@ -59,13 +53,7 @@ function AdeRelayChart() {
         y: value,
       })),
     },
-    {
-      name: "Power",
-      data: power.map(({ timestamp, value }) => ({
-        x: timestamp,
-        y: value,
-      })),
-    },
+  
   ];
 
   const options = {
@@ -97,8 +85,9 @@ function AdeRelayChart() {
         type="area"
         height={350}
       />
+         <ReactApexChart options={options} series={series} type="bar" height={350} />
     </React.Fragment>
   );
 }
 
-export default AdeRelayChart;
+export default AdeChart;
