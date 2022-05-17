@@ -42,13 +42,13 @@ export async function getDeviceById(deviceId) {
   return data;
 }
 
-export async function updateDeviceById(deviceId,deviceData) {
+export async function updateDeviceById(deviceId, deviceData) {
   const { data } = await axios.patch("/device/" + deviceId, deviceData);
   return data;
 }
 
 export async function updateDeviceStatusById(deviceData) {
- const { data } = await axios.patch("/device/"+deviceData._id,deviceData);
+  const { data } = await axios.patch("/device/" + deviceData._id, deviceData);
   return data;
 }
 // const { data } = await axios.patch("/device/"+deviceData.deviceData._id, deviceData.deviceData);
@@ -59,5 +59,25 @@ export async function deleteDeviceById(deviceId) {
 
 export async function getRecords(deviceId, attribute) {
   const { data } = await axios.get("/record/" + deviceId + "/" + attribute);
+  return data;
+}
+
+export async function getAuthStatus() {
+  const { data } = await axios.get("/auth/status");
+  return data;
+}
+
+export async function signUserUp(user) {
+  const { data } = await axios.post("/user", user);
+  return data;
+}
+
+export async function logUserIn(user) {
+  const { data } = await axios.post("/auth/login", user);
+  return data;
+}
+
+export async function logout() {
+  const { data } = await axios.get("/auth/logout");
   return data;
 }

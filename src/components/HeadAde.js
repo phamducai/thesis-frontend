@@ -32,7 +32,7 @@ export default function HeadAde() {
     </TableHead>
       <TableBody>
         <TableRow>
-          <TableCell>{devices.name}</TableCell>
+          <TableCell>{devices?.name}</TableCell>
           <TableCell>{devices.attributes?.channels.vrms}</TableCell>
           <TableCell>{devices.attributes?.channels.irms}</TableCell>
           <TableCell>{devices.attributes?.channels.energy}</TableCell>

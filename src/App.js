@@ -1,13 +1,13 @@
 import React from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 
+import { useQuery } from "react-query";
+
 import {
-  // Box,
   AppBar,
   Toolbar,
   IconButton,
   Typography,
-  Button,
   Stack,
   List,
   ListItem,
@@ -15,6 +15,7 @@ import {
   ListItemText,
   ListItemIcon,
   Divider,
+  Paper,
 } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
@@ -25,14 +26,42 @@ import Rooms from "./pages/Rooms";
 import Devices from "./pages/Devices";
 import Test from "./pages/Test";
 import DeviceEdit from "./pages/DeviceEdit";
-import Chart from "./components/Chart";
+import AllDevice from "./components/AllDevice";
 import AdeRelayChart from "./components/Chart/AderelayChart";
 import SensorChart from "./components/Chart/SensorChart";
-import Relay3ChannelsEdit from './pages/Relay3ChannelsEdit'
-import HeadAdeedit from "./pages/HeadAdeedit"; 
+import Relay3ChannelsEdit from "./pages/Relay3ChannelsEdit";
+import HeadAdeedit from "./pages/HeadAdeedit";
 import AdeChart from "./components/Chart/AdeChart";
+
+import { getAuthStatus } from "./api";
+import LoginForm from "./components/LoginForm";
+import LogoutButton from "./components/LogoutButton";
+
 function App() {
   const navigate = useNavigate();
+
+  const { data: user, status } = useQuery("user", getAuthStatus);
+
+  if (status === "loading")
+    return <Stack sx={{ minHeight: "100vh" }}>Checking if logged in</Stack>;
+
+  if (status === "error")
+    return <Stack sx={{ minHeight: "100vh" }}>Server Error</Stack>;
+
+  if (!user)
+    return (
+      <Stack
+        sx={{ minHeight: "100vh" }}
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Paper elevation={3} sx={{ padding: 2 }}>
+          <Stack gap={2}>
+            <LoginForm />
+          </Stack>
+        </Paper>
+      </Stack>
+    );
 
   return (
     <Stack sx={{ minHeight: "100vh" }}>
@@ -50,7 +79,7 @@ function App() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             News
           </Typography>
-          <Button color="inherit">Login</Button>
+          <LogoutButton />
         </Toolbar>
       </AppBar>
 
@@ -66,7 +95,7 @@ function App() {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton onClick={() => navigate("/chart")}>
+              <ListItemButton onClick={() => navigate("/allDevice")}>
                 <ListItemIcon>
                   <DraftsIcon />
                 </ListItemIcon>
@@ -78,19 +107,23 @@ function App() {
         <Divider orientation="vertical" flexItem />
         <Stack sx={{ flexGrow: 1 }}>
           <Routes>
-            <Route path="home" element={<Rooms />} />
+            <Route path="home" exact element={<Rooms />} />
             <Route path="test/:deviceId" element={<Test />} />
-            <Route path="Ade/:deviceId" element={<AdeRelayChart />} />
-            <Route path="Sensor/:deviceId" element={<SensorChart />} />
-            <Route path="chart" element={<Chart />} />
             <Route path="room/:roomId" element={<Devices />} />
             <Route path="device/:deviceId" element={<DeviceEdit />} />
-            <Route path="Relay3ChannelsEdit/:deviceId" element={<Relay3ChannelsEdit />} />
-          
-            <Route path="/" element={<Navigate to="/home" />} />
+
+            <Route path="Ade/:deviceId" element={<AdeRelayChart />} />
+            <Route path="Sensor/:deviceId" element={<SensorChart />} />
+            <Route
+              path="Relay3ChannelsEdit/:deviceId"
+              element={<Relay3ChannelsEdit />}
+            />
             <Route path="HeadAdeedit/:deviceId" element={<HeadAdeedit />} />
             <Route path="Adechart/:deviceId" element={<AdeChart />} />
-            
+
+            <Route path="allDevice" element={<AllDevice />} />
+
+            <Route path="/" element={<Navigate to="/home" />} />
           </Routes>
         </Stack>
       </Stack>

@@ -1,23 +1,15 @@
 import React from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 
-import { Link,useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Button,
-} from "@mui/material";
+import { Table, TableBody, TableCell, TableRow, Button } from "@mui/material";
 
-
-
+import RoomNameTableCell from "../RoomNameTableCell";
 import { getDevices, deleteDeviceById } from "../../api";
 
 export default function RelayAdeNoRoom() {
-    const { deviceId } = useParams();
-    
+  const { deviceId } = useParams();
 
   const { data: devices } = useQuery(
     "device",
@@ -39,15 +31,14 @@ export default function RelayAdeNoRoom() {
   return (
     <Table>
       <TableBody>
- 
-
-        {devices.map((device, indexx) => (
-          <TableRow key={indexx}>
+        {devices.map((device, index) => (
+          <TableRow key={index}>
             <TableCell>{device.name}</TableCell>
             <TableCell>{device?.name1}</TableCell>
             <TableCell>{device?.name2}</TableCell>
             <TableCell>{device?.type}</TableCell>
-            <TableCell>{device?.refRoom}</TableCell>
+            <RoomNameTableCell roomId={device?.refRoom} />
+
             <TableCell>
               <Button
                 color="secondary"
