@@ -2,22 +2,16 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import { useNavigate } from "react-router-dom";
-import {
-  TextField,
-  Button,
-  Typography,
-  Stack,
-  
-} from "@mui/material";
+import { TextField, Button, Typography, Stack } from "@mui/material";
 
 import { updateDeviceById } from "../api";
 const initialValue = {
-  name: ""
+  name: "",
 };
 
 export default function HeadAdeedit() {
   const [device, setDevice] = useState(initialValue);
-  const  deviceId  ="627a8d7b09701995f0db629e"; 
+  const deviceId = "6285d5c83d7f15cbc14c1106";
   useEffect(() => {
     async function getDevice() {
       const { data } = await axios.get(`/device/${deviceId}`);
@@ -31,7 +25,6 @@ export default function HeadAdeedit() {
   const onValueChange = (e) => {
     console.log(e.target.value, e.target.name);
     setDevice({ ...device, [e.target.name]: e.target.value });
-   
   };
 
   let navigate = useNavigate();

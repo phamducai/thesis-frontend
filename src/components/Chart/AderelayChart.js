@@ -1,4 +1,4 @@
-import React ,{useState,useEffect}from "react";
+import React from "react";
 import ReactApexChart from "react-apexcharts";
 
 import { useParams } from "react-router-dom";
@@ -6,7 +6,6 @@ import { useQuery } from "react-query";
 import { getRecords } from "../../api";
 function AdeRelayChart() {
   const { deviceId } = useParams();
-
 
   const { data: vrms } = useQuery(
     "Records1",
