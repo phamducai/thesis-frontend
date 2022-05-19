@@ -1,33 +1,64 @@
 import React from "react";
+import RelayAdeNoRoom from "../components/DeviceNoRoom/AdeNoRoom";
+import {
+  Stack,
+  Paper,
+  Typography,
+  Button,
+  Box,
+  TextField,
+  InputAdornment,
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
-import { Stack, Paper, Typography } from "@mui/material";
+// import { useNavigate } from "react-router-dom";
+// import { addDevice } from "../api";
 
-import RelayAde from "../components/RelayAde";
-import Sensor from "../components/Sensor";
-import Relay3Channels from "../components/Relay3Channels";
-import AdeRoom from "../components/AdeRoom"
+const SearchBar = (
+  <Stack direction="row" padding={1} spacing={1}>
+    <Box>
+      <TextField
+        placeholder="Search by room name"
+        size="small"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
+      />
+    </Box>
+    <Box sx={{ flex: 1 }}></Box>
 
-export default function Rooms() {
+    <Button variant="outlined">Add Device</Button>
+  </Stack>
+);
+
+function Devices() {
+  // const navigate = useNavigate();
+
+  // function add(device) {
+  //   addDevice(device);
+  //   navigate("/chart");
+  // }
   return (
-    <Stack gap={2} sx={{ padding: 2 }}>
-<       Paper>
-        <Typography>Room ADE</Typography>
-        <AdeRoom />
-      </Paper>
+    <Stack
+      sx={{
+        height: 1,
+        bgcolor: "background.default",
+        overflow: "auto",
+        padding: 2,
+      }}
+    >
+      {SearchBar}
+
       <Paper>
         <Typography>Relay ADE</Typography>
-        <RelayAde />
-      </Paper>
-
-      <Paper>
-        <Typography>Sensor</Typography>
-        <Sensor />
-      </Paper>
-
-      <Paper>
-        <Typography>Relay 3 Channels</Typography>
-        <Relay3Channels />
+        <RelayAdeNoRoom />
       </Paper>
     </Stack>
   );
 }
+
+export default Devices;

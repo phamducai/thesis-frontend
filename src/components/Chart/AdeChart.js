@@ -3,10 +3,15 @@ import ReactApexChart from "react-apexcharts";
 
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
-import { getRecords } from "../../api";
+import { getRecords, getDeviceById } from "../../api";
 
 function AdeChart() {
   const { deviceId } = useParams();
+
+  const { data: device } = useQuery(["device", deviceId], () =>
+    getDeviceById(deviceId)
+  );
+  console.log("device", device);
 
   const { data: vrms } = useQuery(
     "Records1",
@@ -29,7 +34,6 @@ function AdeChart() {
       initialData: [],
     }
   );
-  
 
   const series = [
     {
@@ -53,7 +57,6 @@ function AdeChart() {
         y: value,
       })),
     },
-  
   ];
 
   const options = {
@@ -85,7 +88,12 @@ function AdeChart() {
         type="area"
         height={350}
       />
-         <ReactApexChart options={options} series={series} type="bar" height={350} />
+      <ReactApexChart
+        options={options}
+        series={series}
+        type="bar"
+        height={350}
+      />
     </React.Fragment>
   );
 }

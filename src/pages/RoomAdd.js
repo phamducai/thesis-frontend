@@ -10,7 +10,7 @@ import {
 import { addRoom } from "../api";
 import { useNavigate } from "react-router-dom";
 
-export default function AddNewroom() {
+export default function AddRoom() {
   const initialValue = {
     name: "",
   };

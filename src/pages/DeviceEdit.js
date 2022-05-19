@@ -1,90 +1,64 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  TextField,
-  Button,
-  Typography,
-  Stack,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-} from "@mui/material";
+import { TextField, Button, Typography, Stack, MenuItem } from "@mui/material";
 
-import { updateDeviceById } from "../api";
-const initialValue = {
-  name: "",
-  refRoom: "",
-};
+import { updateDeviceById, getRooms, getDeviceById } from "../api";
+import { useQuery } from "react-query";
 
 export default function DeviceEdit() {
-  const [device, setDevice] = useState(initialValue);
   const { deviceId } = useParams();
 
-  const [rooms, setRooms] = useState([]);
-  useEffect(() => {
-    axios
-      .get("/room")
-      .then((response) => setRooms(response.data))
-      .catch((error) => console.log(error.message));
-  }, []);
+  const { data: device } = useQuery(["device", deviceId], () =>
+    getDeviceById(deviceId)
+  );
+  const { data: rooms } = useQuery("rooms", getRooms, { initialData: [] });
 
-  useEffect(() => {
-    async function getDevice() {
-      const { data } = await axios.get(`/device/${deviceId}`);
-      setDevice(data);
-    }
-    getDevice();
-
-    // eslint-disable-next-line
-  }, [deviceId]);
+  const [update, setUpdate] = useState({ name: "", refRoom: "" });
 
   const onValueChange = (e) => {
-    console.log(e.target.value, e.target.name);
-    setDevice({ ...device, [e.target.name]: e.target.value });
-    console.log(device);
+    setUpdate({ ...update, [e.target.name]: e.target.value });
   };
 
   let navigate = useNavigate();
 
-  const editDevice = async () => {
-    // return console.log(device);
-    await updateDeviceById(deviceId, device);
+  const handleSave = async () => {
+    await updateDeviceById(deviceId, update);
 
-    navigate(`/room/${device.refRoom}`);
+    navigate(`/room/${update.refRoom}`);
   };
+
+  useEffect(() => {
+    if (device) setUpdate({ name: device.name, refRoom: device.refRoom || "" });
+  }, [device]);
 
   return (
     <Stack gap={2} sx={{ padding: 2 }}>
       <Typography variant="h4">Edit device</Typography>
 
       <TextField
-        onChange={onValueChange}
+        label="Name"
         name="name"
-        value={device.name}
-        aria-describedby="my-helper-text"
+        value={update.name}
+        onChange={onValueChange}
       />
 
-      <FormControl fullWidth>
-        <InputLabel id="refRoom">In Room</InputLabel>
-        <Select
-          labelId="refRoom"
-          name="refRoom"
-          label="In Room"
-          value={device.refRoom}
-          onChange={onValueChange}
-        >
-          {rooms.map((room) => (
-            <MenuItem value={room._id} key={room._id}>
-              {room.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <TextField
+        select
+        name="refRoom"
+        label="In Room"
+        value={update.refRoom}
+        onChange={onValueChange}
+        helperText="Select room to move this device to"
+      >
+        {rooms.map((room) => (
+          <MenuItem value={room._id} key={room._id}>
+            {room.name}
+          </MenuItem>
+        ))}
+      </TextField>
 
-      <Button variant="contained" color="primary" onClick={editDevice}>
+      <Button variant="contained" color="primary" onClick={handleSave}>
         Save
       </Button>
     </Stack>

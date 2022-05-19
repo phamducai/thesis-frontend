@@ -16,8 +16,8 @@ export async function getRoomById(roomId) {
   return data;
 }
 
-export async function updateRoomById(roomId, roomData) {
-  const { data } = await axios.patch("/room/" + roomId, roomData);
+export async function updateRoomById({ id, payload }) {
+  const { data } = await axios.patch("/room/" + id, payload);
   return data;
 }
 
@@ -79,5 +79,16 @@ export async function logUserIn(user) {
 
 export async function logout() {
   const { data } = await axios.get("/auth/logout");
+  return data;
+}
+
+// building api
+export async function getBuilding() {
+  const { data } = await axios.get("/building");
+  return data[0];
+}
+
+export async function updateBuildingById({ id, payload }) {
+  const { data } = await axios.patch("/building/" + id, payload);
   return data;
 }

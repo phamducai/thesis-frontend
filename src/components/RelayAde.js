@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
-import { Link,useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -10,7 +10,7 @@ import {
   ListItemIcon,
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { getDevices, deleteDeviceById,updateDeviceStatusById  } from "../api";
+import { getDevices, deleteDeviceById, updateDeviceStatusById } from "../api";
 export default function RelayAde() {
   let navigate = useNavigate();
   const { roomId } = useParams();
@@ -29,9 +29,11 @@ export default function RelayAde() {
     mutation.mutate(deviceId);
   }
   function handleUpdata(deviceData) {
-    deviceData.status ? deviceData.status =false : deviceData.status =true
-     updateDeviceStatusById(deviceData);
-     navigate("/room/"+roomId);
+    deviceData.status
+      ? (deviceData.status = false)
+      : (deviceData.status = true);
+    updateDeviceStatusById(deviceData);
+    navigate("/room/" + roomId);
   }
   return (
     <Table>
@@ -40,9 +42,22 @@ export default function RelayAde() {
           <TableRow key={indexx}>
             <TableCell>{device.name}</TableCell>
             <TableCell>
-              <Button  onClick={()=>{handleUpdata(device)}}>{device?.status ? <Button  variant="contained"  color="primary">ON</Button>:<Button  variant="contained"   color="error">Off</Button>}     
-              </Button>          
-              </TableCell>
+              <Button
+                onClick={() => {
+                  handleUpdata(device);
+                }}
+              >
+                {device?.status ? (
+                  <Button variant="contained" color="primary">
+                    ON
+                  </Button>
+                ) : (
+                  <Button variant="contained" color="error">
+                    Off
+                  </Button>
+                )}
+              </Button>
+            </TableCell>
             <TableCell>{device.attributes?.channels.vrms}</TableCell>
             <TableCell>{device.attributes?.channels.irms}</TableCell>
             <TableCell>{device.attributes?.channels.power}</TableCell>
