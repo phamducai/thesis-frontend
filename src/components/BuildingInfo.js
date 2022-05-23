@@ -54,7 +54,15 @@ export default function BuildingInfo() {
             </Stack>
             <Stack direction="row" justifyContent="space-between">
               <Typography>Dien Ap</Typography>
-              <Typography>{relayAde?.attributes?.vrms || "--"} V</Typography>
+              <Typography>
+                {building ? (
+                  <RealtimeVoltage
+                    deviceId={building.refRelayAde}
+                    attr="vrms"
+                  />
+                ) : null}{" "}
+                V
+              </Typography>
             </Stack>
             <Stack direction="row" justifyContent="space-between">
               <Typography>Dong dien</Typography>
@@ -69,7 +77,6 @@ export default function BuildingInfo() {
               </Typography>
             </Stack>
           </Stack>
-
           <Stack flexGrow={1}>
             <Stack direction="row" justifyContent="space-between">
               <Typography>Tieu thu</Typography>
@@ -87,19 +94,6 @@ export default function BuildingInfo() {
               <Typography>Tien Dien</Typography>
               <Typography>
                 {tienDien(relayAde?.attributes?.energy) * 1.1} VND
-              </Typography>
-            </Stack>
-
-            <Stack direction="row" justifyContent="space-between">
-              <Typography>Dien Ap Realtime</Typography>
-              <Typography>
-                {building ? (
-                  <RealtimeVoltage
-                    deviceId={building.refRelayAde}
-                    attr="vrms"
-                  />
-                ) : null}
-                V
               </Typography>
             </Stack>
           </Stack>

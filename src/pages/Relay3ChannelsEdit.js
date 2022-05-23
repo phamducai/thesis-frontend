@@ -17,8 +17,8 @@ import { updateDeviceById } from "../api";
 const initialValue = {
   name: "",
   refRoom: "",
-  name1:"", 
-  name2:"",
+  name1: "",
+  name2: "",
 };
 
 export default function Relay3ChannelsEdit() {
@@ -69,13 +69,13 @@ export default function Relay3ChannelsEdit() {
         aria-describedby="my-helper-text"
       />
 
-           <TextField
+      <TextField
         onChange={onValueChange}
         name="name1"
         value={device?.name1}
         aria-describedby="my-helper-text"
       />
-          <TextField
+      <TextField
         onChange={onValueChange}
         name="name2"
         value={device?.name2}

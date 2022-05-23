@@ -54,13 +54,14 @@ export default function Relay3Channel() {
     updateDeviceStatusById(deviceData);
     navigate("/room/" + roomId);
   }
+  console.log(devices);
   return (
     <Table>
       <TableBody>
         {devices.map((device, index) => (
           <TableRow key={index}>
             <TableCell>{device.name}</TableCell>
-            <TableCell>{device.attributes?.namechannel1}</TableCell>
+
             <TableCell>
               <Switch
                 onClick={() => {

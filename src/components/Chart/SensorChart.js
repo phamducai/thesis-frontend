@@ -80,7 +80,6 @@ function SensorChart() {
         type="area"
         height={350}
       />
-    
     </React.Fragment>
   );
 }

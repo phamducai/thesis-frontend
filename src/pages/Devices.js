@@ -3,7 +3,6 @@ import RelayAdeNoRoom from "../components/DeviceNoRoom/AdeNoRoom";
 import {
   Stack,
   Paper,
-  Typography,
   Button,
   Box,
   TextField,
@@ -54,7 +53,6 @@ function Devices() {
       {SearchBar}
 
       <Paper>
-        <Typography>Relay ADE</Typography>
         <RelayAdeNoRoom />
       </Paper>
     </Stack>

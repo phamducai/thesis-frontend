@@ -25,6 +25,7 @@ export default function Room() {
         padding: 2,
       }}
     >
+      <Typography align="center">{room?.name}</Typography>
       <Paper>
         <Typography>Special RelayAde</Typography>
         <Typography>abc</Typography>
@@ -34,7 +35,6 @@ export default function Room() {
         <AdeRoom />
       </Paper>
       <Paper>
-        <Typography>{room?.name}</Typography>
         <RelayAde />
       </Paper>
 

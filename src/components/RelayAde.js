@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { getDevices, deleteDeviceById, updateDeviceStatusById } from "../api";
+import { useContextEngine } from "../lib/context-engine";
 export default function RelayAde() {
   let navigate = useNavigate();
   const { roomId } = useParams();
@@ -35,6 +36,16 @@ export default function RelayAde() {
     updateDeviceStatusById(deviceData);
     navigate("/room/" + roomId);
   }
+  //   const action = setTimeout(function(){
+  //     // something function handleUpdata(deviceData) {
+  //     deviceData.status
+  //     ? (deviceData.status = false)
+  //     : (deviceData.status = true);
+  //   updateDeviceStatusById(deviceData);
+  //   navigate("/room/" + roomId);
+  // }
+  // }, 3000);
+
   return (
     <Table>
       <TableBody>
@@ -46,22 +57,24 @@ export default function RelayAde() {
                 onClick={() => {
                   handleUpdata(device);
                 }}
+                color={device?.status ? "primary" : "error"}
               >
-                {device?.status ? (
-                  <Button variant="contained" color="primary">
-                    ON
-                  </Button>
-                ) : (
-                  <Button variant="contained" color="error">
-                    Off
-                  </Button>
-                )}
+                {device?.status ? "ON" : "OFF"}
               </Button>
             </TableCell>
-            <TableCell>{device.attributes?.channels.vrms}</TableCell>
-            <TableCell>{device.attributes?.channels.irms}</TableCell>
-            <TableCell>{device.attributes?.channels.power}</TableCell>
-            <TableCell>{device.attributes?.channels.energy}</TableCell>
+
+            <TableCell>
+              <RealtimeVoltage deviceId={device._id} attr="vrms" />
+            </TableCell>
+            <TableCell>
+              <RealtimeVoltage deviceId={device._id} attr="irms" />
+            </TableCell>
+            <TableCell>
+              <RealtimeVoltage deviceId={device._id} attr="power" />
+            </TableCell>
+            <TableCell>
+              <RealtimeVoltage deviceId={device._id} attr="energy" />
+            </TableCell>
 
             <TableCell>
               <Button
@@ -89,10 +102,29 @@ export default function RelayAde() {
               >
                 Delete
               </Button>
+              <Button
+                onClick={() => {
+                  handleUpdata(device);
+                }}
+                color={device?.status ? "primary" : "error"}
+              >
+                {device?.status ? "ON" : "OFF"}
+              </Button>
             </TableCell>
           </TableRow>
         ))}
       </TableBody>
     </Table>
   );
+}
+
+function RealtimeVoltage({ deviceId, attr }) {
+  const { data } = useContextEngine(`telemetry.${deviceId}.${attr}`, {
+    initialData: {
+      value: 0,
+      timestamp: new Date(),
+    },
+  });
+
+  return data.value;
 }

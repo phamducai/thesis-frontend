@@ -15,7 +15,7 @@ import {
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
 import { getDevices, deleteDeviceById } from "../api";
-
+import { useContextEngine } from "../lib/context-engine";
 export default function Sensor() {
   const { roomId } = useParams();
   const { data: devices } = useQuery(
@@ -41,9 +41,16 @@ export default function Sensor() {
         {devices.map((device, indexx) => (
           <TableRow key={indexx}>
             <TableCell>{device.name}</TableCell>
-            <TableCell>{device.attributes?.channels.temp}</TableCell>
-          <TableCell>{device.attributes?.channels.humidity}</TableCell>
-          <TableCell>{device.attributes?.channels.airquality}</TableCell>
+
+            <TableCell>
+              <RealtimeVoltage deviceId={device._id} attr="temp" />
+            </TableCell>
+            <TableCell>
+              <RealtimeVoltage deviceId={device._id} attr="humidity" />
+            </TableCell>
+            <TableCell>
+              <RealtimeVoltage deviceId={device._id} attr="airquality" />
+            </TableCell>
             <TableCell>
               <Button
                 color="primary"
@@ -76,4 +83,14 @@ export default function Sensor() {
       </TableBody>
     </Table>
   );
+}
+function RealtimeVoltage({ deviceId, attr }) {
+  const { data } = useContextEngine(`telemetry.${deviceId}.${attr}`, {
+    initialData: {
+      value: 0,
+      timestamp: new Date(),
+    },
+  });
+
+  return data.value;
 }

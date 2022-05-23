@@ -38,7 +38,6 @@ export default function Rooms() {
       }}
     >
       <BuildingInfo />
-
       <Stack direction="row" padding={1} spacing={1}>
         <Box>
           <TextField

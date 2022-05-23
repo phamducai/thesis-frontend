@@ -15,7 +15,7 @@ import {
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
 import { getDevices, deleteDeviceById } from "../api";
-
+import { useContextEngine } from "../lib/context-engine";
 
 export default function AdeRoom() {
   const { roomId } = useParams();
@@ -30,7 +30,7 @@ export default function AdeRoom() {
       queryClient.invalidateQueries("AdeRooms");
     },
   });
-  
+
   function handleDelete(deviceId) {
     mutation.mutate(deviceId);
   }
@@ -41,9 +41,15 @@ export default function AdeRoom() {
         {devices.map((device, indexxxx) => (
           <TableRow key={indexxxx}>
             <TableCell>{device.name}</TableCell>
-            <TableCell>{device.attributes?.channels.vrms}</TableCell>
-            <TableCell>{device.attributes?.channels.irms}</TableCell>
-            <TableCell>{device.attributes?.channels.energy}</TableCell>
+            <TableCell>
+              <RealtimeVoltage deviceId={device._id} attr="vrms" />
+            </TableCell>
+            <TableCell>
+              <RealtimeVoltage deviceId={device._id} attr="irms" />
+            </TableCell>
+            <TableCell>
+              <RealtimeVoltage deviceId={device._id} attr="energy" />
+            </TableCell>
             <TableCell>
               <Button
                 color="primary"
@@ -76,4 +82,14 @@ export default function AdeRoom() {
       </TableBody>
     </Table>
   );
+}
+function RealtimeVoltage({ deviceId, attr }) {
+  const { data } = useContextEngine(`telemetry.${deviceId}.${attr}`, {
+    initialData: {
+      value: 0,
+      timestamp: new Date(),
+    },
+  });
+
+  return data.value;
 }

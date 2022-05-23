@@ -22,7 +22,6 @@ export default function AddRoom() {
 
   const Add = async () => {
     await addRoom(room);
-
     navigate("/");
   };
 

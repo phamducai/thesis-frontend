@@ -2,15 +2,15 @@ import React from "react";
 // import ReactApexChart from "react-apexcharts";
 
 // import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
-import {
-  getBuilding,
-  getRecords,
-  // getDeviceById
-} from "../api";
+// import { useQuery } from "react-query";
+// import {
+//   getBuilding,
+//   getRecords,
+//   getDeviceById
+// } from "../api";
 
 export default function BuildingChart() {
-  const { data: building } = useQuery("building", getBuilding);
+  // const { data: building } = useQuery("building", getBuilding);
 
   return <div>a</div>;
 

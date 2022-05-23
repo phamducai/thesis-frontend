@@ -92,3 +92,9 @@ export async function updateBuildingById({ id, payload }) {
   const { data } = await axios.patch("/building/" + id, payload);
   return data;
 }
+
+//gui commandown
+export async function addCommandDevice() {
+  const { data } = await axios.post("/device/add");
+  return data;
+}

@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 
 import { getDevices, getBuilding, updateBuildingById } from "../api";
-
+import { useNavigate } from "react-router-dom";
 export default function BuildingSetting() {
   const { data: relayAdes } = useQuery(
     "ades",
@@ -27,12 +27,13 @@ export default function BuildingSetting() {
       queryClient.invalidateQueries("building");
     },
   });
-
+  let navigate = useNavigate();
   function handleSave() {
     mutation.mutate({
       id: building._id,
       payload: { refRelayAde: refRelayAde },
     });
+    navigate("/");
   }
 
   React.useEffect(() => {

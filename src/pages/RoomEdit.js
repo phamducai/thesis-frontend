@@ -12,12 +12,7 @@ import {
 } from "@mui/material";
 
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import {
-  deleteRoomById,
-  updateRoomById,
-  getRoomById,
-  getDevices,
-} from "../api";
+import { updateRoomById, getRoomById, getDevices } from "../api";
 
 export default function RoomEdit() {
   const navigate = useNavigate();
