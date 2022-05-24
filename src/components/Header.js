@@ -1,11 +1,16 @@
 import { AppBar, Toolbar, IconButton, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
+import { useQuery } from "react-query";
+import { getAuthStatus } from "../api";
+
 import LogoutButton from "./LogoutButton";
 
 const drawerWidth = 240;
 
 export default function Header({ handleDrawerToggle }) {
+  const { data: user } = useQuery("user", getAuthStatus);
+
   return (
     <AppBar
       elevation={0}
@@ -26,7 +31,7 @@ export default function Header({ handleDrawerToggle }) {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          sss Admin
+          {user?.username}
         </Typography>
         <LogoutButton />
       </Toolbar>

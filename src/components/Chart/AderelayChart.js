@@ -2,73 +2,55 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 
 import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
-import { getRecords } from "../../api";
+import { useContextEngine } from "../../lib/context-engine";
 function AdeRelayChart() {
   const { deviceId } = useParams();
 
-  const { data: vrms } = useQuery(
-    "Records1",
-    () => getRecords(deviceId, "vrms"),
-    {
-      initialData: [],
-    }
-  );
-  const { data: irms } = useQuery(
-    "Records2",
-    () => getRecords(deviceId, "irms"),
-    {
-      initialData: [],
-    }
-  );
-  const { data: energy } = useQuery(
-    "Records3",
-    () => getRecords(deviceId, "energy"),
-    {
-      initialData: [],
-    }
-  );
-  const { data: power } = useQuery(
-    "Records4",
-    () => getRecords(deviceId, "power"),
-    {
-      initialData: [],
-    }
-  );
+  const { data: vrms } = useContextEngine(`telemetry.${deviceId}.vrms`, {
+    initialData: { value: 0, timestamp: "" },
+  });
+  const [vrmsArray, setVrmsArray] = React.useState(new Array(20).fill(0));
+  React.useEffect(() => {
+    setVrmsArray([...vrmsArray.slice(1), vrms.value]);
+    // eslint-disable-next-line
+  }, [vrms]);
+  const { data: irms } = useContextEngine(`telemetry.${deviceId}.irms`, {
+    initialData: { value: 0, timestamp: "" },
+  });
+  const [irmsArray, setIrmsArray] = React.useState(new Array(20).fill(0));
+  React.useEffect(() => {
+    setIrmsArray([...irmsArray.slice(1), irms.value]);
+    // eslint-disable-next-line
+  }, [irms]);
+
+  const { data: power } = useContextEngine(`telemetry.${deviceId}.power`, {
+    initialData: { value: 0, timestamp: "" },
+  });
+  const [powerArray, setPowerArray] = React.useState(new Array(20).fill(0));
+  React.useEffect(() => {
+    setPowerArray([...powerArray.slice(1), power.value]);
+    // eslint-disable-next-line
+  }, [power]);
 
   const series = [
     {
       name: "Vrms",
-      data: vrms.map(({ timestamp, value }) => ({
-        x: timestamp,
-        y: value,
-      })),
+      data: vrmsArray,
     },
     {
       name: "Irms",
-      data: irms.map(({ timestamp, value }) => ({
-        x: timestamp,
-        y: value,
-      })),
-    },
-    {
-      name: "Energy",
-      data: energy.map(({ timestamp, value }) => ({
-        x: timestamp,
-        y: value,
-      })),
+      data: irmsArray,
     },
     {
       name: "Power",
-      data: power.map(({ timestamp, value }) => ({
-        x: timestamp,
-        y: value,
-      })),
+      data: powerArray,
     },
   ];
-
   const options = {
     chart: {
+      animations: {
+        enabled: false,
+      },
       height: 350,
       type: "area",
       dataLabels: {
@@ -77,14 +59,6 @@ function AdeRelayChart() {
     },
     stroke: {
       curve: "smooth",
-    },
-    xaxis: {
-      type: "datetime",
-    },
-    tooltip: {
-      x: {
-        format: "dd/MM/yy HH:mm",
-      },
     },
   };
 

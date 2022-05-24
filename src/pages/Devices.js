@@ -12,6 +12,10 @@ import SearchIcon from "@mui/icons-material/Search";
 
 // import { useNavigate } from "react-router-dom";
 // import { addDevice } from "../api";
+import { addCommandDevice } from "../api";
+function add() {
+  addCommandDevice();
+}
 
 const SearchBar = (
   <Stack direction="row" padding={1} spacing={1}>
@@ -30,7 +34,9 @@ const SearchBar = (
     </Box>
     <Box sx={{ flex: 1 }}></Box>
 
-    <Button variant="outlined">Add Device</Button>
+    <Button variant="outlined" onClick={add}>
+      Add Device
+    </Button>
   </Stack>
 );
 

@@ -15,7 +15,6 @@ export default function Room() {
   const { data: room } = useQuery(["roName", roomId], () =>
     getRoomById(roomId)
   );
-  console.log(room);
   return (
     <Stack
       sx={{
