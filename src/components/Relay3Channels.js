@@ -128,7 +128,7 @@ export default function Relay3Channel() {
               <Button
                 color="error"
                 variant="contained"
-                onClick={() => handleDelete(device.dev_add)}
+                onClick={() => handleDelete(device.dev_addr)}
               >
                 Delete
               </Button>

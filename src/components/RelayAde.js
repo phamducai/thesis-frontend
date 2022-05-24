@@ -36,16 +36,6 @@ export default function RelayAde() {
     updateDeviceStatusById(deviceData);
     navigate("/room/" + roomId);
   }
-  //   const action = setTimeout(function(){
-  //     // something function handleUpdata(deviceData) {
-  //     deviceData.status
-  //     ? (deviceData.status = false)
-  //     : (deviceData.status = true);
-  //   updateDeviceStatusById(deviceData);
-  //   navigate("/room/" + roomId);
-  // }
-  // }, 3000);
-
   return (
     <Table>
       <TableBody>
@@ -64,16 +54,13 @@ export default function RelayAde() {
             </TableCell>
 
             <TableCell>
-              <RealtimeVoltage deviceId={device._id} attr="vrms" />
+              <RealtimeVoltage deviceId={device._id} attr="vrms" /> V
             </TableCell>
             <TableCell>
-              <RealtimeVoltage deviceId={device._id} attr="irms" />
+              <RealtimeVoltage deviceId={device._id} attr="irms" /> A
             </TableCell>
             <TableCell>
-              <RealtimeVoltage deviceId={device._id} attr="power" />
-            </TableCell>
-            <TableCell>
-              <RealtimeVoltage deviceId={device._id} attr="status" />
+              <RealtimeVoltage deviceId={device._id} attr="power" /> KW
             </TableCell>
 
             <TableCell>
@@ -98,7 +85,7 @@ export default function RelayAde() {
               <Button
                 color="error"
                 variant="contained"
-                onClick={() => handleDelete(device.dev_add)}
+                onClick={() => handleDelete(device.dev_addr)}
               >
                 Delete
               </Button>
@@ -109,7 +96,6 @@ export default function RelayAde() {
     </Table>
   );
 }
-
 function RealtimeVoltage({ deviceId, attr }) {
   const { data } = useContextEngine(`telemetry.${deviceId}.${attr}`, {
     initialData: {

@@ -79,12 +79,12 @@ export default function BuildingInfo() {
           </Stack>
           <Stack flexGrow={1}>
             <Stack direction="row" justifyContent="space-between">
-              <Typography>Tieu thu</Typography>
+              <Typography>Cong Suat</Typography>
               <Typography>
                 {building ? (
                   <RealtimeVoltage
                     deviceId={building.refRelayAde}
-                    attr="energy"
+                    attr="power"
                   />
                 ) : null}{" "}
                 KW
@@ -93,7 +93,7 @@ export default function BuildingInfo() {
             <Stack direction="row" justifyContent="space-between">
               <Typography>Tien Dien</Typography>
               <Typography>
-                {tienDien(relayAde?.attributes?.energy) * 1.1} VND
+                {tienDien(relayAde?.attributes?.power) * 1.1} VND
               </Typography>
             </Stack>
           </Stack>

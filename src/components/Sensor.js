@@ -73,7 +73,7 @@ export default function Sensor() {
               <Button
                 color="error"
                 variant="contained"
-                onClick={() => handleDelete(device.dev_add)}
+                onClick={() => handleDelete(device.dev_addr)}
               >
                 Delete
               </Button>

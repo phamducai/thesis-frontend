@@ -1,8 +1,6 @@
 import React from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
-
 import { Link, useParams } from "react-router-dom";
-
 import {
   Table,
   TableBody,
@@ -11,12 +9,9 @@ import {
   Button,
   ListItemIcon,
 } from "@mui/material";
-
 import VisibilityIcon from "@mui/icons-material/Visibility";
-
 import { getDevices, deleteDeviceById } from "../api";
 import { useContextEngine } from "../lib/context-engine";
-
 export default function AdeRoom() {
   const { roomId } = useParams();
   const { data: devices } = useQuery(
@@ -30,11 +25,9 @@ export default function AdeRoom() {
       queryClient.invalidateQueries("AdeRooms");
     },
   });
-
   function handleDelete(deviceId) {
     mutation.mutate(deviceId);
   }
-
   return (
     <Table>
       <TableBody>
@@ -72,7 +65,7 @@ export default function AdeRoom() {
               <Button
                 color="error"
                 variant="contained"
-                onClick={() => handleDelete(device.dev_add)}
+                onClick={() => handleDelete(device.dev_addr)}
               >
                 Delete
               </Button>
@@ -90,6 +83,5 @@ function RealtimeVoltage({ deviceId, attr }) {
       timestamp: new Date(),
     },
   });
-
   return data.value;
 }
