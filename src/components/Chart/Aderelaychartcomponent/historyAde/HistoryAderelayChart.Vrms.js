@@ -5,19 +5,17 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getRecords } from "../../../../api";
 import { Typography } from "@mui/material";
-
 function HistoryAderelayChartVrms() {
   const { deviceId } = useParams();
   const { data: vrms } = useQuery(
     "Records1",
-    () => getRecords(deviceId, "Vrms1"),
+    () => getRecords(deviceId, "vrms"),
     {
       initialData: [],
     }
   );
   const series = [
     {
-      name: "Vrms",
       data: vrms.map(({ timestamp, value }) => ({
         x: timestamp,
         y: value,

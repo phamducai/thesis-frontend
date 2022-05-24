@@ -26,14 +26,11 @@ export default function Room() {
     >
       <Typography align="center">{room?.name}</Typography>
       <Paper>
-        <Typography>Special RelayAde</Typography>
-        <Typography>abc</Typography>
-      </Paper>
-
-      <Paper>
+        <Typography>AdeRoom</Typography>
         <AdeRoom />
       </Paper>
       <Paper>
+        <Typography>relayAde</Typography>
         <RelayAde />
       </Paper>
 

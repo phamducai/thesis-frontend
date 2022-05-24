@@ -69,6 +69,14 @@ export default function AdeRoom() {
               >
                 Delete
               </Button>
+              <Button
+                color="primary"
+                variant="contained"
+                component={Link}
+                to={`/historty/${device._id}`}
+              >
+                History Room
+              </Button>
             </TableCell>
           </TableRow>
         ))}
