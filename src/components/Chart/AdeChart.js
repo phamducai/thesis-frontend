@@ -20,39 +20,11 @@ function AdeChart() {
       initialData: [],
     }
   );
-  const { data: irms } = useQuery(
-    "Records2",
-    () => getRecords(deviceId, "irms"),
-    {
-      initialData: [],
-    }
-  );
-  const { data: energy } = useQuery(
-    "Records3",
-    () => getRecords(deviceId, "energy"),
-    {
-      initialData: [],
-    }
-  );
 
   const series = [
     {
       name: "Vrms",
       data: vrms.map(({ timestamp, value }) => ({
-        x: timestamp,
-        y: value,
-      })),
-    },
-    {
-      name: "Irms",
-      data: irms.map(({ timestamp, value }) => ({
-        x: timestamp,
-        y: value,
-      })),
-    },
-    {
-      name: "Energy",
-      data: energy.map(({ timestamp, value }) => ({
         x: timestamp,
         y: value,
       })),
