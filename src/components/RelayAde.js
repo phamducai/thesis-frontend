@@ -89,6 +89,14 @@ export default function RelayAde() {
               >
                 Delete
               </Button>
+              <Button
+                color="primary"
+                variant="contained"
+                component={Link}
+                to={`/historty/${device._id}`}
+              >
+                History device
+              </Button>
             </TableCell>
           </TableRow>
         ))}

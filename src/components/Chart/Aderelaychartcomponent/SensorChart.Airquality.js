@@ -4,21 +4,25 @@ import ReactApexChart from "react-apexcharts";
 import { useParams } from "react-router-dom";
 import { useContextEngine } from "../../../lib/context-engine";
 import { Typography } from "@mui/material";
-function AdeRelayChartVrms() {
+function SensorChartAirquality() {
   const { deviceId } = useParams();
-
-  const { data: vrms } = useContextEngine(`telemetry.${deviceId}.vrms`, {
-    initialData: { value: 0, timestamp: "" },
-  });
-  const [vrmsArray, setVrmsArray] = React.useState(new Array(20).fill(0));
+  const { data: airquality } = useContextEngine(
+    `telemetry.${deviceId}.airquality`,
+    {
+      initialData: { value: 0, timestamp: "" },
+    }
+  );
+  const [airqualityArray, setAirqualityArray] = React.useState(
+    new Array(20).fill(0)
+  );
   React.useEffect(() => {
-    setVrmsArray([...vrmsArray.slice(1), vrms.value]);
+    setAirqualityArray([...airqualityArray.slice(1), airquality.value]);
     // eslint-disable-next-line
-  }, [vrms]);
+  }, [airquality]);
   const series = [
     {
-      name: "Vrms",
-      data: vrmsArray,
+      name: "Airquality",
+      data: airqualityArray,
     },
   ];
   const options = {
@@ -36,10 +40,9 @@ function AdeRelayChartVrms() {
       curve: "smooth",
     },
   };
-
   return (
     <React.Fragment>
-      <Typography align="center">Vrms</Typography>
+      <Typography align="center">Airquality</Typography>
 
       <ReactApexChart
         options={options}
@@ -51,4 +54,4 @@ function AdeRelayChartVrms() {
   );
 }
 
-export default AdeRelayChartVrms;
+export default SensorChartAirquality;

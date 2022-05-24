@@ -4,21 +4,21 @@ import ReactApexChart from "react-apexcharts";
 import { useParams } from "react-router-dom";
 import { useContextEngine } from "../../../lib/context-engine";
 import { Typography } from "@mui/material";
-function AdeRelayChartVrms() {
+function SensorChartTemp() {
   const { deviceId } = useParams();
 
-  const { data: vrms } = useContextEngine(`telemetry.${deviceId}.vrms`, {
+  const { data: temp } = useContextEngine(`telemetry.${deviceId}.temp`, {
     initialData: { value: 0, timestamp: "" },
   });
-  const [vrmsArray, setVrmsArray] = React.useState(new Array(20).fill(0));
+  const [tempArray, setTempArray] = React.useState(new Array(20).fill(0));
   React.useEffect(() => {
-    setVrmsArray([...vrmsArray.slice(1), vrms.value]);
+    setTempArray([...tempArray.slice(1), temp.value]);
     // eslint-disable-next-line
-  }, [vrms]);
+  }, [temp]);
   const series = [
     {
-      name: "Vrms",
-      data: vrmsArray,
+      name: "Temp",
+      data: tempArray,
     },
   ];
   const options = {
@@ -39,7 +39,7 @@ function AdeRelayChartVrms() {
 
   return (
     <React.Fragment>
-      <Typography align="center">Vrms</Typography>
+      <Typography align="center">Temp</Typography>
 
       <ReactApexChart
         options={options}
@@ -51,4 +51,4 @@ function AdeRelayChartVrms() {
   );
 }
 
-export default AdeRelayChartVrms;
+export default SensorChartTemp;

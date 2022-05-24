@@ -2,30 +2,29 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 
 import { useParams } from "react-router-dom";
-import { useContextEngine } from "../../../lib/context-engine";
+import { useQuery } from "react-query";
+import { getRecords } from "../../../../api";
 import { Typography } from "@mui/material";
-function AdeRelayChartIrms() {
-  const { deviceId } = useParams();
 
-  const { data: irms } = useContextEngine(`telemetry.${deviceId}.irms`, {
-    initialData: { value: 0, timestamp: "" },
-  });
-  const [irmsArray, setIrmsArray] = React.useState(new Array(20).fill(0));
-  React.useEffect(() => {
-    setIrmsArray([...irmsArray.slice(1), irms.value]);
-    // eslint-disable-next-line
-  }, [irms]);
+function HistoryAderelayChartIrms() {
+  const { deviceId } = useParams();
+  const { data: irms } = useQuery(
+    "Records1",
+    () => getRecords(deviceId, "irms1"),
+    {
+      initialData: [],
+    }
+  );
   const series = [
     {
-      name: "Irms",
-      data: irmsArray,
+      data: irms.map(({ timestamp, value }) => ({
+        x: timestamp,
+        y: value,
+      })),
     },
   ];
   const options = {
     chart: {
-      animations: {
-        enabled: false,
-      },
       height: 350,
       type: "area",
       dataLabels: {
@@ -35,12 +34,18 @@ function AdeRelayChartIrms() {
     stroke: {
       curve: "smooth",
     },
+    xaxis: {
+      type: "datetime",
+    },
+    tooltip: {
+      x: {
+        format: "dd/MM/yy HH:mm",
+      },
+    },
   };
-
   return (
     <React.Fragment>
       <Typography align="center">Irms</Typography>
-
       <ReactApexChart
         options={options}
         series={series}
@@ -50,5 +55,4 @@ function AdeRelayChartIrms() {
     </React.Fragment>
   );
 }
-
-export default AdeRelayChartIrms;
+export default HistoryAderelayChartIrms;

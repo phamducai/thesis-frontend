@@ -2,30 +2,29 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 
 import { useParams } from "react-router-dom";
-import { useContextEngine } from "../../../lib/context-engine";
+import { useQuery } from "react-query";
+import { getRecords } from "../../../../api";
 import { Typography } from "@mui/material";
-function AdeRelayChartPower() {
-  const { deviceId } = useParams();
 
-  const { data: power } = useContextEngine(`telemetry.${deviceId}.power`, {
-    initialData: { value: 0, timestamp: "" },
-  });
-  const [powerArray, setPowerArray] = React.useState(new Array(20).fill(0));
-  React.useEffect(() => {
-    setPowerArray([...powerArray.slice(1), power.value]);
-    // eslint-disable-next-line
-  }, [power]);
+function HistoryAderelayChartPower() {
+  const { deviceId } = useParams();
+  const { data: power } = useQuery(
+    "Records1",
+    () => getRecords(deviceId, "power1"),
+    {
+      initialData: [],
+    }
+  );
   const series = [
     {
-      name: "Power",
-      data: powerArray,
+      data: power.map(({ timestamp, value }) => ({
+        x: timestamp,
+        y: value,
+      })),
     },
   ];
   const options = {
     chart: {
-      animations: {
-        enabled: false,
-      },
       height: 350,
       type: "area",
       dataLabels: {
@@ -34,6 +33,14 @@ function AdeRelayChartPower() {
     },
     stroke: {
       curve: "smooth",
+    },
+    xaxis: {
+      type: "datetime",
+    },
+    tooltip: {
+      x: {
+        format: "dd/MM/yy HH:mm",
+      },
     },
   };
   return (
@@ -48,4 +55,4 @@ function AdeRelayChartPower() {
     </React.Fragment>
   );
 }
-export default AdeRelayChartPower;
+export default HistoryAderelayChartPower;
