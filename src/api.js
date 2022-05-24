@@ -51,7 +51,6 @@ export async function updateDeviceStatusById(deviceData) {
   const { data } = await axios.patch("/device/" + deviceData._id, deviceData);
   return data;
 }
-// const { data } = await axios.patch("/device/"+deviceData.deviceData._id, deviceData.deviceData);
 export async function deleteDeviceById(deviceId) {
   const { data } = await axios.delete("/device/" + deviceId);
   return data;
