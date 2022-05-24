@@ -15,6 +15,7 @@ function HistoryAderelayChartPower() {
       initialData: [],
     }
   );
+
   const series = [
     {
       data: power.map(({ timestamp, value }) => ({
