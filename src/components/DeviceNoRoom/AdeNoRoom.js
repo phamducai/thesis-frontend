@@ -51,7 +51,7 @@ export default function RelayAdeNoRoom() {
               <Button
                 color="error"
                 variant="contained"
-                onClick={() => handleDelete(device._id)}
+                onClick={() => handleDelete(device.dev_addr)}
               >
                 Delete
               </Button>

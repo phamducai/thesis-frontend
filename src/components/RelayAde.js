@@ -73,7 +73,7 @@ export default function RelayAde() {
               <RealtimeVoltage deviceId={device._id} attr="power" />
             </TableCell>
             <TableCell>
-              <RealtimeVoltage deviceId={device._id} attr="energy" />
+              <RealtimeVoltage deviceId={device._id} attr="status" />
             </TableCell>
 
             <TableCell>
@@ -98,17 +98,9 @@ export default function RelayAde() {
               <Button
                 color="error"
                 variant="contained"
-                onClick={() => handleDelete(device._id)}
+                onClick={() => handleDelete(device.dev_add)}
               >
                 Delete
-              </Button>
-              <Button
-                onClick={() => {
-                  handleUpdata(device);
-                }}
-                color={device?.status ? "primary" : "error"}
-              >
-                {device?.status ? "ON" : "OFF"}
               </Button>
             </TableCell>
           </TableRow>
