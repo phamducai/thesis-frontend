@@ -45,7 +45,7 @@ export default function RoomEdit() {
   const mutation = useMutation(updateRoomById, {
     onSuccess: () => {
       queryClient.invalidateQueries(["room", roomId]);
-      navigate("/room/" + roomId);
+      navigate("/");
     },
   });
   function handleSave() {
@@ -54,7 +54,6 @@ export default function RoomEdit() {
       payload: update,
     });
   }
-
   return (
     <Stack
       sx={{
@@ -85,9 +84,7 @@ export default function RoomEdit() {
           </MenuItem>
         ))}
       </TextField>
-
       <Divider flexItem />
-
       <Box>
         <Button variant="contained" onClick={handleSave}>
           Save

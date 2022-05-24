@@ -9,9 +9,6 @@ import {
   InputAdornment,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-
-// import { useNavigate } from "react-router-dom";
-// import { addDevice } from "../api";
 import { addCommandDevice } from "../api";
 function add() {
   addCommandDevice();
@@ -41,12 +38,6 @@ const SearchBar = (
 );
 
 function Devices() {
-  // const navigate = useNavigate();
-
-  // function add(device) {
-  //   addDevice(device);
-  //   navigate("/chart");
-  // }
   return (
     <Stack
       sx={{

@@ -19,6 +19,8 @@ import AdeChart from "./Chart/AdeChart";
 import BuildingSetting from "../pages/BuildingSetting";
 import BuildingChart from "../pages/BuildingChart";
 
+import Adehistory from "./Chart/Adehistory";
+
 const drawerWidth = 240;
 
 export default function Main() {
@@ -58,6 +60,7 @@ export default function Main() {
         <Route path="Adechart/:deviceId" element={<AdeChart />} />
 
         <Route path="*" element={<Navigate to="/room" />} />
+        <Route path="historty/:deviceId" element={<Adehistory />} />
       </Routes>
     </Stack>
   );
