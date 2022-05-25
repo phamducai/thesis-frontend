@@ -86,15 +86,13 @@ export default function BuildingInfo() {
                     deviceId={building.refRelayAde}
                     attr="power"
                   />
-                ) : null}{" "}
+                ) : null}
                 KW
               </Typography>
             </Stack>
             <Stack direction="row" justifyContent="space-between">
               <Typography>Tien Dien</Typography>
-              <Typography>
-                {tienDien(relayAde?.attributes?.power) * 1.1} VND
-              </Typography>
+              <Typography>{tienDien(relayAde?.power) * 1.1} VND</Typography>
             </Stack>
           </Stack>
         </Stack>
