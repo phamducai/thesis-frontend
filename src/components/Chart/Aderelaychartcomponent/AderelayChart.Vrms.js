@@ -6,7 +6,6 @@ import { useContextEngine } from "../../../lib/context-engine";
 import { Typography } from "@mui/material";
 function AdeRelayChartVrms() {
   const { deviceId } = useParams();
-
   const { data: vrms } = useContextEngine(`telemetry.${deviceId}.vrms`, {
     initialData: { value: 0, timestamp: "" },
   });

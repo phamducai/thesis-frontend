@@ -46,7 +46,7 @@ export default function Main() {
 
         <Route path="device">
           <Route index element={<Devices />} />
-          <Route path=":deviceId" element={<DeviceEdit />} />
+          <Route path=":deviceId/edit" element={<DeviceEdit />} />
         </Route>
 
         <Route path="Ade/:deviceId" element={<AdeRelayChart />} />

@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -10,11 +10,12 @@ import {
   ListItemIcon,
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { getDevices, deleteDeviceById, updateDeviceStatusById } from "../api";
+import { getDevices, deleteDeviceById, sendCommand } from "../api";
 import { useContextEngine } from "../lib/context-engine";
+
 export default function RelayAde() {
-  let navigate = useNavigate();
   const { roomId } = useParams();
+
   const { data: devices } = useQuery(
     "RelayAdes",
     () => getDevices({ params: { type: "RelayAde", refRoom: roomId } }),
@@ -26,15 +27,9 @@ export default function RelayAde() {
       queryClient.invalidateQueries("RelayAdes");
     },
   });
+
   function handleDelete(deviceId) {
     mutation.mutate(deviceId);
-  }
-  function handleUpdata(deviceData) {
-    deviceData.status
-      ? (deviceData.status = false)
-      : (deviceData.status = true);
-    updateDeviceStatusById(deviceData);
-    navigate("/room/" + roomId);
   }
   return (
     <Table>
@@ -43,24 +38,17 @@ export default function RelayAde() {
           <TableRow key={indexx}>
             <TableCell>{device.name}</TableCell>
             <TableCell>
-              <Button
-                onClick={() => {
-                  handleUpdata(device);
-                }}
-                color={device?.status ? "primary" : "error"}
-              >
-                {device?.status ? "ON" : "OFF"}
-              </Button>
+              <RealtimeStatusButton deviceId={device._id} field="status" />
             </TableCell>
 
             <TableCell>
-              <RealtimeVoltage deviceId={device._id} attr="vrms" /> V
+              <RealtimeMetric deviceId={device._id} attr="vrms" /> V
             </TableCell>
             <TableCell>
-              <RealtimeVoltage deviceId={device._id} attr="irms" /> A
+              <RealtimeMetric deviceId={device._id} attr="irms" /> A
             </TableCell>
             <TableCell>
-              <RealtimeVoltage deviceId={device._id} attr="power" /> KW
+              <RealtimeMetric deviceId={device._id} attr="power" /> KW
             </TableCell>
 
             <TableCell>
@@ -78,7 +66,7 @@ export default function RelayAde() {
                 color="secondary"
                 variant="contained"
                 component={Link}
-                to={`/device/${device._id}`}
+                to={`/device/${device._id}/edit`}
               >
                 Edit
               </Button>
@@ -104,7 +92,7 @@ export default function RelayAde() {
     </Table>
   );
 }
-function RealtimeVoltage({ deviceId, attr }) {
+function RealtimeMetric({ deviceId, attr }) {
   const { data } = useContextEngine(`telemetry.${deviceId}.${attr}`, {
     initialData: {
       value: 0,
@@ -113,4 +101,24 @@ function RealtimeVoltage({ deviceId, attr }) {
   });
 
   return data.value;
+}
+
+function RealtimeStatusButton({ deviceId, field }) {
+  const { data } = useContextEngine(`telemetry.${deviceId}.${field}`, {
+    initialData: {
+      value: "OFF",
+    },
+  });
+
+  function handleClick() {
+    sendCommand(deviceId, { [field]: data.value === "OFF" ? "ON" : "OFF" });
+  }
+
+  const color = data.value === "OFF" ? "error" : "primary";
+
+  return (
+    <Button variant="contained" onClick={handleClick} color={color}>
+      {data.value}
+    </Button>
+  );
 }

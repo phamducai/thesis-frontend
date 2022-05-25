@@ -14,22 +14,32 @@ export default function DeviceEdit() {
   );
   const { data: rooms } = useQuery("rooms", getRooms, { initialData: [] });
 
-  const [update, setUpdate] = useState({ name: "", refRoom: "" });
+  const [formData, setFormData] = useState({ name: "", refRoom: "" });
 
   const onValueChange = (e) => {
-    setUpdate({ ...update, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   let navigate = useNavigate();
 
   const handleSave = async () => {
-    await updateDeviceById(deviceId, update);
+    if (!formData.name && !formData.refRoom) return;
 
-    navigate(`/room/${update.refRoom}`);
+    await updateDeviceById(deviceId, {
+      name: formData.name,
+      ...(formData.refRoom && { refRoom: formData.refRoom }),
+    });
+
+    navigate(`/room/${formData.refRoom}`);
   };
 
   useEffect(() => {
-    if (device) setUpdate({ name: device.name, refRoom: device.refRoom || "" });
+    if (device)
+      setFormData((prev) => ({
+        ...prev,
+        ...(device.name && { name: device.name }),
+        ...(device.refRoom && { refRoom: device.refRoom }),
+      }));
   }, [device]);
 
   return (
@@ -39,7 +49,7 @@ export default function DeviceEdit() {
       <TextField
         label="Name"
         name="name"
-        value={update.name}
+        value={formData.name}
         onChange={onValueChange}
       />
 
@@ -47,7 +57,7 @@ export default function DeviceEdit() {
         select
         name="refRoom"
         label="In Room"
-        value={update.refRoom}
+        value={formData.refRoom}
         onChange={onValueChange}
         helperText="Select room to move this device to"
       >

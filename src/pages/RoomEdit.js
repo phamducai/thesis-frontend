@@ -17,7 +17,10 @@ import { updateRoomById, getRoomById, getDevices } from "../api";
 export default function RoomEdit() {
   const navigate = useNavigate();
   const { roomId } = useParams();
-  const { data: room } = useQuery(["room", roomId], () => getRoomById(roomId));
+
+  const { data: room } = useQuery(["room", roomId], () => getRoomById(roomId), {
+    initialData: null,
+  });
   const { data: relayAdes } = useQuery(
     ["RelayAde", { refRoom: roomId }],
     () =>
@@ -30,15 +33,18 @@ export default function RoomEdit() {
     { initialData: [] }
   );
 
-  const [update, setUpdate] = React.useState({ name: "", refRelayAde: "" });
+  const [formData, setFormData] = React.useState({ name: "", refRelayAde: "" });
 
   function handleChange(e) {
-    setUpdate({ ...update, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
   React.useEffect(() => {
     if (room)
-      setUpdate({ name: room.name || "", refRelayAde: room.refRelayAde || "" });
+      setFormData({
+        name: room.name || "",
+        refRelayAde: room.refRelayAde || "",
+      });
   }, [room]);
 
   const queryClient = useQueryClient();
@@ -48,12 +54,17 @@ export default function RoomEdit() {
       navigate("/");
     },
   });
+
   function handleSave() {
     mutation.mutate({
       id: roomId,
-      payload: update,
+      payload: {
+        name: formData.name,
+        ...(formData.refRelayAde && { refRelayAde: formData.refRelayAde }),
+      },
     });
   }
+
   return (
     <Stack
       sx={{
@@ -68,14 +79,14 @@ export default function RoomEdit() {
       <TextField
         name="name"
         label="Room Name"
-        value={update.name}
+        value={formData.name}
         onChange={handleChange}
       />
       <TextField
         select
         label="Room main RelayAde"
         name="refRelayAde"
-        value={update.refRelayAde}
+        value={formData.refRelayAde}
         onChange={handleChange}
       >
         {relayAdes.map((relayAde) => (

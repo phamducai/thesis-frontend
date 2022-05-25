@@ -66,7 +66,7 @@ export default function Sensor() {
                 color="secondary"
                 variant="contained"
                 component={Link}
-                to={`/device/${device._id}`}
+                to={`/device/${device._id}/edit`}
               >
                 Edit
               </Button>

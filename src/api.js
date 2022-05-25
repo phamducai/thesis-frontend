@@ -93,7 +93,13 @@ export async function updateBuildingById({ id, payload }) {
 }
 
 //gui commandown
-export async function addCommandDevice() {
-  const { data } = await axios.post("/device/add");
+export async function sendAddDeviceCommand() {
+  const { data } = await axios.get("/device/add");
+  return data;
+}
+
+// command related
+export async function sendCommand(id, commandObject) {
+  const { data } = await axios.post(`/device/${id}/command`, commandObject);
   return data;
 }

@@ -12,7 +12,13 @@ import {
   Switch,
 } from "@mui/material";
 
-import { getDevices, deleteDeviceById, updateDeviceStatusById } from "../api";
+import {
+  getDevices,
+  deleteDeviceById,
+  updateDeviceStatusById,
+  sendCommand,
+} from "../api";
+import { useContextEngine } from "../lib/context-engine";
 
 export default function Relay3Channel() {
   const { roomId } = useParams();
@@ -63,58 +69,16 @@ export default function Relay3Channel() {
             <TableCell>{device.name}</TableCell>
 
             <TableCell>
-              <Switch
-                onClick={() => {
-                  handleUpdata1(device);
-                }}
-              >
-                {device?.status1 ? (
-                  <Button variant="contained" color="primary">
-                    ON
-                  </Button>
-                ) : (
-                  <Button variant="contained" color="error">
-                    Off
-                  </Button>
-                )}
-              </Switch>
+              <RealtimeStatusButton deviceId={device._id} field="status1" />
             </TableCell>
 
             <TableCell>{device?.name1}</TableCell>
             <TableCell>
-              <Switch
-                onClick={() => {
-                  handleUpdata2(device);
-                }}
-              >
-                {device?.status2 ? (
-                  <Button variant="contained" color="primary">
-                    ON
-                  </Button>
-                ) : (
-                  <Button variant="contained" color="error">
-                    Off
-                  </Button>
-                )}
-              </Switch>
+              <RealtimeStatusButton deviceId={device._id} field="status2" />
             </TableCell>
             <TableCell>{device?.name2}</TableCell>
             <TableCell>
-              <Switch
-                onClick={() => {
-                  handleUpdata3(device);
-                }}
-              >
-                {device?.status3 ? (
-                  <Button variant="contained" color="primary">
-                    ON
-                  </Button>
-                ) : (
-                  <Button variant="contained" color="error">
-                    Off
-                  </Button>
-                )}
-              </Switch>
+              <RealtimeStatusButton deviceId={device._id} field="status3" />
             </TableCell>
             <TableCell>
               <Button
@@ -137,5 +101,25 @@ export default function Relay3Channel() {
         ))}
       </TableBody>
     </Table>
+  );
+}
+
+function RealtimeStatusButton({ deviceId, field }) {
+  const { data } = useContextEngine(`telemetry.${deviceId}.${field}`, {
+    initialData: {
+      value: "OFF",
+    },
+  });
+
+  function handleClick() {
+    sendCommand(deviceId, { [field]: data.value === "OFF" ? "ON" : "OFF" });
+  }
+
+  const color = data.value === "OFF" ? "error" : "primary";
+
+  return (
+    <Button variant="contained" onClick={handleClick} color={color}>
+      {data.value}
+    </Button>
   );
 }

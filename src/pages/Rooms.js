@@ -18,6 +18,8 @@ import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 
 import BuildingInfo from "../components/BuildingInfo";
+import { deleteRoomById } from "../api";
+import { useMutation, useQueryClient } from "react-query";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -27,6 +29,13 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function Rooms() {
   const { data: rooms } = useQuery("Rooms", getRooms, { initialData: [] });
   const navigate = useNavigate();
+
+  const queryClient = useQueryClient();
+  const deleteMutation = useMutation(deleteRoomById, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("Rooms");
+    },
+  });
 
   return (
     <Stack
@@ -83,6 +92,13 @@ export default function Rooms() {
                   onClick={() => navigate(`${_id}/edit`)}
                 >
                   Edit
+                </Button>
+                <Button
+                  color="warning"
+                  variant="contained"
+                  onClick={() => deleteMutation.mutate(_id)}
+                >
+                  Delete
                 </Button>
               </Stack>
             </Item>
