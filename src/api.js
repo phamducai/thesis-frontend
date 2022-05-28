@@ -47,8 +47,8 @@ export async function updateDeviceById(deviceId, deviceData) {
   return data;
 }
 
-export async function updateDeviceStatusById(deviceData) {
-  const { data } = await axios.patch("/device/" + deviceData._id, deviceData);
+export async function updateDeviceStatusById(deviceId) {
+  const { data } = await axios.patch("/device/" + deviceId.dev_addr, deviceId);
   return data;
 }
 export async function deleteDeviceById(deviceId) {
@@ -103,3 +103,4 @@ export async function sendCommand(id, commandObject) {
   const { data } = await axios.post(`/device/${id}/command`, commandObject);
   return data;
 }
+//commane

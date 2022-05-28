@@ -38,14 +38,13 @@ function AdeRelayChartVrms() {
 
   return (
     <React.Fragment>
-      <Typography align="center">Vrms</Typography>
-
       <ReactApexChart
         options={options}
         series={series}
         type="area"
         height={350}
       />
+      <Typography align="center">Vrms</Typography>
     </React.Fragment>
   );
 }

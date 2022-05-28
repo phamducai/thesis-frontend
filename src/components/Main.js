@@ -13,6 +13,7 @@ import Devices from "../pages/Devices";
 import AdeRelayChart from "./Chart/AderelayChart";
 import SensorChart from "./Chart/SensorChart";
 import Relay3ChannelsEdit from "../pages/Relay3ChannelsEdit";
+import Alldevice from "./alldevice/Alldevice";
 
 import AdeChart from "./Chart/AdeChart";
 
@@ -51,16 +52,14 @@ export default function Main() {
 
         <Route path="Ade/:deviceId" element={<AdeRelayChart />} />
         <Route path="Sensor/:deviceId" element={<SensorChart />} />
-        <Route
-          path="Relay3ChannelsEdit/:deviceId"
-          element={<Relay3ChannelsEdit />}
-        />
+        <Route path="Edit/:deviceId" element={<Relay3ChannelsEdit />} />
         <Route path="building-setting" element={<BuildingSetting />} />
         <Route path="building-chart" element={<BuildingChart />} />
         <Route path="Adechart/:deviceId" element={<AdeChart />} />
 
         <Route path="*" element={<Navigate to="/room" />} />
         <Route path="historty/:deviceId" element={<Adehistory />} />
+        <Route path="Alldevice" element={<Alldevice />} />
       </Routes>
     </Stack>
   );

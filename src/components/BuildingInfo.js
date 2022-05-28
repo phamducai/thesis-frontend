@@ -7,7 +7,7 @@ import ShowChartIcon from "@mui/icons-material/ShowChart";
 import { useContextEngine } from "../lib/context-engine";
 import { getDeviceById, getBuilding } from "../api";
 import tienDien from "./tienDien";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function BuildingInfo() {
   const navigate = useNavigate();
@@ -23,7 +23,6 @@ export default function BuildingInfo() {
       enabled: Boolean(deviceId),
     }
   );
-
   return (
     <Paper>
       <Stack padding={2} spacing={2}>
@@ -34,7 +33,8 @@ export default function BuildingInfo() {
 
           <IconButton
             aria-label="delete"
-            onClick={() => navigate("/building-chart")}
+            component={Link}
+            to={`/historty/${relayAde?._id}`}
           >
             <ShowChartIcon />
           </IconButton>
@@ -52,8 +52,9 @@ export default function BuildingInfo() {
               <Typography>Home Name</Typography>
               <Typography>{relayAde?.name || "--"}</Typography>
             </Stack>
+
             <Stack direction="row" justifyContent="space-between">
-              <Typography>Dien Ap</Typography>
+              <Typography>Voltage</Typography>
               <Typography>
                 {building ? (
                   <RealtimeVoltage
@@ -65,7 +66,7 @@ export default function BuildingInfo() {
               </Typography>
             </Stack>
             <Stack direction="row" justifyContent="space-between">
-              <Typography>Dong dien</Typography>
+              <Typography>Current</Typography>
               <Typography>
                 {building ? (
                   <RealtimeVoltage
@@ -79,7 +80,7 @@ export default function BuildingInfo() {
           </Stack>
           <Stack flexGrow={1}>
             <Stack direction="row" justifyContent="space-between">
-              <Typography>Cong Suat</Typography>
+              <Typography>POWER</Typography>
               <Typography>
                 {building ? (
                   <RealtimeVoltage
@@ -91,7 +92,7 @@ export default function BuildingInfo() {
               </Typography>
             </Stack>
             <Stack direction="row" justifyContent="space-between">
-              <Typography>Tien Dien</Typography>
+              <Typography>VALUE</Typography>
               <Typography>{tienDien(relayAde?.power) * 1.1} VND</Typography>
             </Stack>
           </Stack>

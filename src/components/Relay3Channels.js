@@ -1,21 +1,16 @@
 import React from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Button,
-  Switch,
-} from "@mui/material";
+import { Table, TableBody, TableCell, TableRow, Button } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 import {
   getDevices,
   deleteDeviceById,
-  updateDeviceStatusById,
+  // updateDeviceStatusById,
   sendCommand,
 } from "../api";
 import { useContextEngine } from "../lib/context-engine";
@@ -38,29 +33,15 @@ export default function Relay3Channel() {
   function handleDelete(deviceId) {
     mutation.mutate(deviceId);
   }
-  let navigate = useNavigate();
-  function handleUpdata1(deviceData) {
-    deviceData.status1
-      ? (deviceData.status1 = false)
-      : (deviceData.status1 = true);
-    updateDeviceStatusById(deviceData);
-    navigate("/room/" + roomId);
-  }
-  function handleUpdata2(deviceData) {
-    deviceData.status2
-      ? (deviceData.status2 = false)
-      : (deviceData.status2 = true);
-    updateDeviceStatusById(deviceData);
-    navigate("/room/" + roomId);
-  }
-  function handleUpdata3(deviceData) {
-    deviceData.status3
-      ? (deviceData.status3 = false)
-      : (deviceData.status3 = true);
-    updateDeviceStatusById(deviceData);
-    navigate("/room/" + roomId);
-  }
-  console.log(devices);
+  // let navigate = useNavigate();
+  // function handleUpdata1(deviceData) {
+  //   deviceData.status1
+  //     ? (deviceData.status1 = false)
+  //     : (deviceData.status1 = true);
+  //   updateDeviceStatusById(deviceData);
+  //   navigate("/room/" + roomId);
+  // // }
+
   return (
     <Table>
       <TableBody>
@@ -68,16 +49,16 @@ export default function Relay3Channel() {
           <TableRow key={index}>
             <TableCell>{device.name}</TableCell>
 
-            <TableCell>
+            <TableCell padding='none'>
               <RealtimeStatusButton deviceId={device._id} field="status1" />
             </TableCell>
 
             <TableCell>{device?.name1}</TableCell>
-            <TableCell>
+            <TableCell padding='none'>
               <RealtimeStatusButton deviceId={device._id} field="status2" />
             </TableCell>
             <TableCell>{device?.name2}</TableCell>
-            <TableCell>
+            <TableCell padding='none'>
               <RealtimeStatusButton deviceId={device._id} field="status3" />
             </TableCell>
             <TableCell>
@@ -85,16 +66,16 @@ export default function Relay3Channel() {
                 color="secondary"
                 variant="contained"
                 component={Link}
-                to={`/Relay3ChannelsEdit/${device._id}`}
+                to={`/Edit/${device._id}`}
               >
-                Edit
+                <SettingsIcon />
               </Button>
               <Button
                 color="error"
                 variant="contained"
-                onClick={() => handleDelete(device.dev_addr)}
+                onClick={() => handleDelete(device._id)}
               >
-                Delete
+                <DeleteIcon />
               </Button>
             </TableCell>
           </TableRow>

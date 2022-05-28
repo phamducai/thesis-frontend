@@ -15,8 +15,8 @@ import { GridActionsCellItem } from "@mui/x-data-grid";
 import SettingsIcon from "@mui/icons-material/Settings";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
-import { useQuery } from "react-query";
-import { getDevices } from "../api";
+import { useQuery, useQueryClient, useMutation } from "react-query";
+import { getDevices, deleteDeviceById } from "../api";
 
 const SearchBar = (
   <Stack direction="row" padding={1} spacing={1}>
@@ -35,25 +35,31 @@ const SearchBar = (
     </Box>
     <Box sx={{ flex: 1 }}></Box>
 
-    <Button variant="outlined" onClick={sendAddDeviceCommand}>
-      Send Add Device Command
+    <Button variant="contained" onClick={sendAddDeviceCommand}>
+      Add Device
     </Button>
   </Stack>
 );
 
 function Devices() {
-  const devicesQuery = useQuery(["devices"], () => getDevices(), {
+  const devicesQuery = useQuery("alldevices", () => getDevices(), {
     initialData: [],
   });
+  const queryClient = useQueryClient();
+  const mutation = useMutation(deleteDeviceById, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("alldevices");
+    },
+  });
+
+  function handleDelete(deviceId) {
+    mutation.mutate(deviceId);
+  }
 
   const columns = [
     { field: "name", headerName: "Name", width: 200 },
     { field: "dev_addr", header: "dev_addr" },
     { field: "type", headerName: "Type" },
-    {
-      field: "_id",
-      headerName: "_id",
-    },
     {
       field: "actions",
       headerName: "Actions",
@@ -64,13 +70,13 @@ function Devices() {
           label="Edit"
           showInMenu
           component={Link}
-          to={`${params.id}/edit`}
+          to={`/Edit/${params.id}`}
         />,
         <GridActionsCellItem
           icon={<DeleteForeverIcon />}
           label="Delete"
           showInMenu
-          onClick={() => {}}
+          onClick={() => handleDelete(params.dev_addr)}
         />,
       ],
     },

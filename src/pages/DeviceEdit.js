@@ -1,9 +1,14 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { TextField, Button, Typography, Stack, MenuItem } from "@mui/material";
 
-import { updateDeviceById, getRooms, getDeviceById } from "../api";
+import {
+  updateDeviceById,
+  getRooms,
+  getDeviceById,
+  updateDeviceStatusById,
+} from "../api";
 import { useQuery } from "react-query";
 
 export default function DeviceEdit() {
@@ -24,7 +29,7 @@ export default function DeviceEdit() {
 
   const handleSave = async () => {
     if (!formData.name && !formData.refRoom) return;
-
+    updateDeviceStatusById(deviceId);
     await updateDeviceById(deviceId, {
       name: formData.name,
       ...(formData.refRoom && { refRoom: formData.refRoom }),

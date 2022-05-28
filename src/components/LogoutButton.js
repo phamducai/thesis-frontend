@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { useMutation, useQueryClient } from "react-query";
 import { logout } from "../api";
-
+import LogoutIcon from "@mui/icons-material/Logout";
 export default function LogoutButton() {
   const queryClient = useQueryClient();
 
@@ -19,6 +19,7 @@ export default function LogoutButton() {
       }}
       variant="contained"
     >
+      <LogoutIcon />
       Log out
     </Button>
   );

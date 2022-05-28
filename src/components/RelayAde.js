@@ -7,11 +7,20 @@ import {
   TableCell,
   TableRow,
   Button,
-  ListItemIcon,
+  TextField,
+  Stack,
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { getDevices, deleteDeviceById, sendCommand } from "../api";
 import { useContextEngine } from "../lib/context-engine";
+import HistoryIcon from "@mui/icons-material/History";
+import DeleteIcon from "@mui/icons-material/Delete";
+import SettingsIcon from "@mui/icons-material/Settings";
+
+import { LocalizationProvider } from "@mui/lab";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import { DateTimePicker } from "@mui/lab";
+import { useState } from "react";
 
 export default function RelayAde() {
   const { roomId } = useParams();
@@ -30,6 +39,15 @@ export default function RelayAde() {
 
   function handleDelete(deviceId) {
     mutation.mutate(deviceId);
+  }
+  const [selectedDateTime, setSelectedDateTime] = useState(null);
+  console.log({
+    selectedDateTime,
+  });
+  function handlealert(deviceId) {
+    sendCommand(deviceId, {
+      selectedDateTime,
+    });
   }
   return (
     <Table>
@@ -51,40 +69,53 @@ export default function RelayAde() {
               <RealtimeMetric deviceId={device._id} attr="power" /> KW
             </TableCell>
 
-            <TableCell>
+            <TableCell align="center">
               <Button
                 color="primary"
                 variant="contained"
                 component={Link}
                 to={`/Ade/${device._id}`}
               >
-                <ListItemIcon>
-                  <VisibilityIcon />
-                </ListItemIcon>
+                <VisibilityIcon />
               </Button>
               <Button
                 color="secondary"
                 variant="contained"
                 component={Link}
-                to={`/device/${device._id}/edit`}
+                to={`/Edit/${device._id}`}
               >
-                Edit
+                <SettingsIcon />
               </Button>
               <Button
                 color="error"
                 variant="contained"
-                onClick={() => handleDelete(device.dev_addr)}
+                onClick={() => handleDelete(device._id)}
               >
-                Delete
+                <DeleteIcon />
               </Button>
               <Button
-                color="primary"
+                color="inherit"
                 variant="contained"
                 component={Link}
                 to={`/historty/${device._id}`}
               >
-                History device
+                <HistoryIcon />
               </Button>
+            </TableCell>
+            <TableCell>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <Stack spacing={4} sx={{ width: "250px" }}>
+                  <DateTimePicker
+                    label="Date Time vl"
+                    value={selectedDateTime}
+                    onChange={(newValue) => {
+                      setSelectedDateTime(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                  <Button onClick={() => handlealert(device._id)}> Save</Button>
+                </Stack>
+              </LocalizationProvider>
             </TableCell>
           </TableRow>
         ))}

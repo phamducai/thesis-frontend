@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 
 import { updateDeviceById } from "../api";
+import SaveIcon from "@mui/icons-material/Save";
 const initialValue = {
   name: "",
   refRoom: "",
@@ -100,7 +101,7 @@ export default function Relay3ChannelsEdit() {
       </FormControl>
 
       <Button variant="contained" color="primary" onClick={editDevice}>
-        Save
+        <SaveIcon /> Save
       </Button>
     </Stack>
   );

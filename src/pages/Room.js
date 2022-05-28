@@ -26,21 +26,17 @@ export default function Room() {
     >
       <Typography align="center">{room?.name}</Typography>
       <Paper>
-        <Typography>AdeRoom</Typography>
         <AdeRoom />
       </Paper>
       <Paper>
-        <Typography>relayAde</Typography>
         <RelayAde />
       </Paper>
 
       <Paper>
-        <Typography>Sensor</Typography>
         <Sensor />
       </Paper>
 
       <Paper>
-        <Typography>Relay 3 Channels</Typography>
         <Relay3Channels />
       </Paper>
     </Stack>

@@ -4,6 +4,8 @@ import { Typography, Button, TextField } from "@mui/material";
 import { useMutation, useQueryClient } from "react-query";
 
 import { signUserUp, logUserIn } from "../api";
+import LoginIcon from "@mui/icons-material/Login";
+import Divider from "@mui/material/Divider";
 
 export default function LoginForm() {
   const [tab, setTab] = React.useState(false);
@@ -43,22 +45,22 @@ export default function LoginForm() {
   if (tab)
     return (
       <React.Fragment>
-        <Typography>Signup</Typography>
+        <Typography>Register</Typography>
 
         <TextField
-          label="Username"
+          label="User Name"
           variant="outlined"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <TextField
-          label="Password"
+          label="PassWord"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <TextField
-          label="Re-Password"
+          label="Confirm PassWord"
           type="password"
           value={repassword}
           onChange={(e) => setRepassword(e.target.value)}
@@ -70,26 +72,28 @@ export default function LoginForm() {
           onClick={handleSignup}
           disabled={!username || !password || password !== repassword}
         >
-          Signup
+          Login
         </Button>
-        <Button color="secondary" variant="contained" onClick={switchTab}>
-          Signin with existing account
+        <Divider />
+
+        <Button color="success" variant="contained" onClick={switchTab}>
+          Already HAVE ACCOUNT ?
         </Button>
       </React.Fragment>
     );
 
   return (
     <React.Fragment>
-      <Typography>Login with existing account or sign up</Typography>
+      <Typography variant="h5">Login</Typography>
 
       <TextField
-        label="Username"
+        label="User Name"
         variant="outlined"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
       <TextField
-        label="Password"
+        label="PassWord"
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
@@ -100,10 +104,12 @@ export default function LoginForm() {
         onClick={handleLogin}
         disabled={!username || !password}
       >
+        <LoginIcon />
         Login
       </Button>
-      <Button color="secondary" variant="contained" onClick={switchTab}>
-        Signup
+      <Divider />
+      <Button color="success" variant="contained" onClick={switchTab}>
+        Register
       </Button>
     </React.Fragment>
   );

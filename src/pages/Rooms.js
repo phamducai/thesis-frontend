@@ -1,6 +1,7 @@
 import React from "react";
 import { getRooms } from "../api";
 import { useQuery } from "react-query";
+// import { DateFnsAdapter } from "@date-io/date-fns";
 
 import {
   Stack,
@@ -21,6 +22,9 @@ import BuildingInfo from "../components/BuildingInfo";
 import { deleteRoomById } from "../api";
 import { useMutation, useQueryClient } from "react-query";
 
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import SettingsIcon from "@mui/icons-material/Settings";
+import DeleteIcon from "@mui/icons-material/Delete";
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   padding: theme.spacing(2),
@@ -84,21 +88,26 @@ export default function Rooms() {
               <Typography>{name}</Typography>
 
               <Stack direction="row" gap={2}>
-                <Button variant="contained" onClick={() => navigate(_id)}>
-                  View
+                <Button
+                  variant="contained"
+                  onClick={() => navigate(_id)}
+                  color="primary"
+                >
+                  <VisibilityIcon />
                 </Button>
                 <Button
                   variant="contained"
                   onClick={() => navigate(`${_id}/edit`)}
+                  color="secondary"
                 >
-                  Edit
+                  <SettingsIcon />
                 </Button>
                 <Button
-                  color="warning"
+                  color="error"
                   variant="contained"
                   onClick={() => deleteMutation.mutate(_id)}
                 >
-                  Delete
+                  <DeleteIcon />
                 </Button>
               </Stack>
             </Item>

@@ -39,14 +39,13 @@ function AdeRelayChartIrms() {
 
   return (
     <React.Fragment>
-      <Typography align="center">Irms</Typography>
-
       <ReactApexChart
         options={options}
         series={series}
         type="area"
         height={350}
-      />
+      />{" "}
+      <Typography align="center">Irms</Typography>
     </React.Fragment>
   );
 }

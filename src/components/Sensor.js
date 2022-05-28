@@ -3,17 +3,11 @@ import { useQuery, useMutation, useQueryClient } from "react-query";
 
 import { Link, useParams } from "react-router-dom";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Button,
-  ListItemIcon,
-} from "@mui/material";
+import { Table, TableBody, TableCell, TableRow, Button } from "@mui/material";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
-
+import DeleteIcon from "@mui/icons-material/Delete";
+import SettingsIcon from "@mui/icons-material/Settings";
 import { getDevices, deleteDeviceById } from "../api";
 import { useContextEngine } from "../lib/context-engine";
 export default function Sensor() {
@@ -40,42 +34,48 @@ export default function Sensor() {
       <TableBody>
         {devices.map((device, indexx) => (
           <TableRow key={indexx}>
-            <TableCell>{device.name}</TableCell>
+            <TableCell >{device.name}</TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
 
-            <TableCell>
+
+            <TableCell align="center">
               <RealtimeVoltage deviceId={device._id} attr="temp" />
             </TableCell>
-            <TableCell>
+            <TableCell align="center">
               <RealtimeVoltage deviceId={device._id} attr="humidity" />
             </TableCell>
-            <TableCell>
+            <TableCell align="center">
               <RealtimeVoltage deviceId={device._id} attr="airquality" />
             </TableCell>
-            <TableCell>
+
+
+
+            
+            <TableCell  align="center">
+              
               <Button
                 color="primary"
                 variant="contained"
                 component={Link}
                 to={`/Sensor/${device._id}`}
               >
-                <ListItemIcon>
-                  <VisibilityIcon />
-                </ListItemIcon>
+                <VisibilityIcon />
               </Button>
               <Button
                 color="secondary"
                 variant="contained"
                 component={Link}
-                to={`/device/${device._id}/edit`}
+                to={`/Edit/${device._id}`}
               >
-                Edit
+                <SettingsIcon />
               </Button>
               <Button
                 color="error"
                 variant="contained"
-                onClick={() => handleDelete(device.dev_addr)}
+                onClick={() => handleDelete(device._id)}
               >
-                Delete
+                <DeleteIcon />
               </Button>
             </TableCell>
           </TableRow>

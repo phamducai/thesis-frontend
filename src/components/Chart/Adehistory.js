@@ -4,6 +4,11 @@ import ReactApexChart from "react-apexcharts";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getRecords } from "../../api";
+import {
+  MuiPickersContext,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 function Adehistory() {
   const { deviceId } = useParams();
@@ -72,14 +77,22 @@ function Adehistory() {
       },
     },
   };
+  // const [value, setValue] = React.useState(new Date());
+
+  // const handleChange = (newValue) => {
+  //   setValue(newValue);
+  // };
+
   return (
     <React.Fragment>
-      <ReactApexChart
-        options={options}
-        series={series}
-        type="area"
-        height={350}
-      />
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <ReactApexChart
+          options={options}
+          series={series}
+          type="area"
+          height={350}
+        />
+      </MuiPickersUtilsProvider>
     </React.Fragment>
   );
 }
