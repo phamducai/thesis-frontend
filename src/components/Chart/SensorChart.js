@@ -3,12 +3,18 @@ import ReactApexChart from "react-apexcharts";
 
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
-import { getRecords } from "../../api";
+import { getRecords, getDeviceById } from "../../api";
 import SensorChartTemp from "./Aderelaychartcomponent/SensorChart.Temp";
 import SensorChartHumidity from "./Aderelaychartcomponent/SensorChart.Humidity";
 import SensorChartAirquality from "./Aderelaychartcomponent/SensorChart.Airquality";
+
+import { Typography } from "@mui/material";
+
 function SensorChart() {
   const { deviceId } = useParams();
+  const { data: device } = useQuery(["devicessss", deviceId], () =>
+    getDeviceById(deviceId)
+  );
   const { data: temp } = useQuery(
     "Records1",
     () => getRecords(deviceId, "temp"),
@@ -76,6 +82,7 @@ function SensorChart() {
   };
   return (
     <React.Fragment>
+      <Typography>{device?.name}</Typography>
       <ReactApexChart
         options={options}
         series={series}

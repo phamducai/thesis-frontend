@@ -18,7 +18,6 @@ import Alldevice from "./alldevice/Alldevice";
 import AdeChart from "./Chart/AdeChart";
 
 import BuildingSetting from "../pages/BuildingSetting";
-import BuildingChart from "../pages/BuildingChart";
 
 import Adehistory from "./Chart/Adehistory";
 import DeviceSence from "../pages/DeviceSence";
@@ -55,7 +54,6 @@ export default function Main() {
         <Route path="Sensor/:deviceId" element={<SensorChart />} />
         <Route path="Edit/:deviceId" element={<Relay3ChannelsEdit />} />
         <Route path="building-setting" element={<BuildingSetting />} />
-        <Route path="building-chart" element={<BuildingChart />} />
         <Route path="Adechart/:deviceId" element={<AdeChart />} />
 
         <Route path="*" element={<Navigate to="/room" />} />
