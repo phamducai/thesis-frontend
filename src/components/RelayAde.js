@@ -84,7 +84,7 @@ export default function RelayAde() {
                 color="inherit"
                 variant="contained"
                 component={Link}
-                to={`/Relay3channelSence/${device._id}`}
+                to={`/Sence/${device._id}`}
               >
                 <AccessAlarmIcon />
               </Button>

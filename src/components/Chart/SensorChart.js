@@ -82,7 +82,7 @@ function SensorChart() {
   };
   return (
     <React.Fragment>
-      <Typography>{device?.name}</Typography>
+      <Typography align="center">{device?.name}</Typography>
       <ReactApexChart
         options={options}
         series={series}

@@ -114,7 +114,7 @@ export default function DeviceSence() {
                 variant="standard"
               >
                 <FormLabel component="legend">Timer</FormLabel>
-                <FormGroup>
+                <FormGroup row={true}>
                   <FormControlLabel
                     control={
                       <Checkbox

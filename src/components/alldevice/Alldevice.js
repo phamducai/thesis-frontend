@@ -56,6 +56,13 @@ export default function Alldevice() {
       <Button variant="contained" onClick={sendAddDeviceCommand}>
         Add Device
       </Button>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={sendAddDeviceCommand}
+      >
+        Add Demo
+      </Button>
     </Stack>
   );
 
@@ -71,15 +78,15 @@ export default function Alldevice() {
       {SearchBar}
 
       <Table>
+        <TableHead>
+          <TableCell>Name</TableCell>
+          <TableCell>name1</TableCell>
+          <TableCell>Name2</TableCell>
+          <TableCell>Device Type </TableCell>
+          <TableCell>ROOM</TableCell>
+          <TableCell>ACTION</TableCell>
+        </TableHead>
         <TableBody>
-          <TableHead>
-            <TableCell>Name</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Device Type </TableCell>
-            <TableCell>ROOM</TableCell>
-            <TableCell>ACTION</TableCell>
-          </TableHead>
           {devices.map((device, index) => (
             <TableRow key={index}>
               <TableCell>{device.name}</TableCell>
@@ -94,6 +101,7 @@ export default function Alldevice() {
                   component={Link}
                   to={`/Edit/${device._id}`}
                 >
+                  {" "}
                   <SettingsIcon />
                 </Button>
                 <Button
