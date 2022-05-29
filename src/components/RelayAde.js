@@ -1,27 +1,14 @@
 import React from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { Link, useParams } from "react-router-dom";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Button,
-  TextField,
-  Stack,
-} from "@mui/material";
+import { Table, TableBody, TableCell, TableRow, Button } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { getDevices, deleteDeviceById, sendCommand } from "../api";
 import { useContextEngine } from "../lib/context-engine";
 import HistoryIcon from "@mui/icons-material/History";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsIcon from "@mui/icons-material/Settings";
-
-import { LocalizationProvider } from "@mui/lab";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import { DateTimePicker } from "@mui/lab";
-import { useState } from "react";
-
+import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 export default function RelayAde() {
   const { roomId } = useParams();
 
@@ -40,15 +27,7 @@ export default function RelayAde() {
   function handleDelete(deviceId) {
     mutation.mutate(deviceId);
   }
-  const [selectedDateTime, setSelectedDateTime] = useState(null);
-  console.log({
-    selectedDateTime,
-  });
-  function handlealert(deviceId) {
-    sendCommand(deviceId, {
-      selectedDateTime,
-    });
-  }
+
   return (
     <Table>
       <TableBody>
@@ -101,21 +80,14 @@ export default function RelayAde() {
               >
                 <HistoryIcon />
               </Button>
-            </TableCell>
-            <TableCell>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <Stack spacing={4} sx={{ width: "250px" }}>
-                  <DateTimePicker
-                    label="Date Time vl"
-                    value={selectedDateTime}
-                    onChange={(newValue) => {
-                      setSelectedDateTime(newValue);
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                  <Button onClick={() => handlealert(device._id)}> Save</Button>
-                </Stack>
-              </LocalizationProvider>
+              <Button
+                color="inherit"
+                variant="contained"
+                component={Link}
+                to={`/Relay3channelSence/${device._id}`}
+              >
+                <AccessAlarmIcon />
+              </Button>
             </TableCell>
           </TableRow>
         ))}

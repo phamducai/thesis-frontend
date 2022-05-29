@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import { Table, TableBody, TableCell, TableRow, Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsIcon from "@mui/icons-material/Settings";
+import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 
 import {
   getDevices,
@@ -49,16 +50,16 @@ export default function Relay3Channel() {
           <TableRow key={index}>
             <TableCell>{device.name}</TableCell>
 
-            <TableCell padding='none'>
+            <TableCell padding="none">
               <RealtimeStatusButton deviceId={device._id} field="status1" />
             </TableCell>
 
             <TableCell>{device?.name1}</TableCell>
-            <TableCell padding='none'>
+            <TableCell padding="none">
               <RealtimeStatusButton deviceId={device._id} field="status2" />
             </TableCell>
             <TableCell>{device?.name2}</TableCell>
-            <TableCell padding='none'>
+            <TableCell padding="none">
               <RealtimeStatusButton deviceId={device._id} field="status3" />
             </TableCell>
             <TableCell>
@@ -76,6 +77,14 @@ export default function Relay3Channel() {
                 onClick={() => handleDelete(device._id)}
               >
                 <DeleteIcon />
+              </Button>
+              <Button
+                color="inherit"
+                variant="contained"
+                component={Link}
+                to={`/Relay3channelSence/${device._id}`}
+              >
+                <AccessAlarmIcon />
               </Button>
             </TableCell>
           </TableRow>

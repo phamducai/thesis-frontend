@@ -25,15 +25,15 @@ export default function Alldevice() {
   const { deviceId } = useParams();
 
   const { data: devices } = useQuery(
-    "device",
-    () => getDevices(deviceId, "device"),
+    "devicess",
+    () => getDevices(deviceId, "devicess"),
     { initialData: [] }
   );
 
   const queryClient = useQueryClient();
   const mutation = useMutation(deleteDeviceById, {
     onSuccess: () => {
-      queryClient.invalidateQueries("device");
+      queryClient.invalidateQueries("devicess");
     },
   });
 
@@ -71,15 +71,15 @@ export default function Alldevice() {
       {SearchBar}
 
       <Table>
-        <TableHead>
-          <TableCell>Name</TableCell>
-          <TableCell>Name</TableCell>
-          <TableCell>Name</TableCell>
-          <TableCell>Device Type </TableCell>
-          <TableCell>ROOM</TableCell>
-          <TableCell>ACTION</TableCell>
-        </TableHead>
         <TableBody>
+          <TableHead>
+            <TableCell>Name</TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell>Device Type </TableCell>
+            <TableCell>ROOM</TableCell>
+            <TableCell>ACTION</TableCell>
+          </TableHead>
           {devices.map((device, index) => (
             <TableRow key={index}>
               <TableCell>{device.name}</TableCell>

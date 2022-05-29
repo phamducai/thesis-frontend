@@ -9,7 +9,7 @@ import Room from "../pages/Room";
 import RoomEdit from "../pages/RoomEdit";
 
 import DeviceEdit from "../pages/DeviceEdit";
-import Devices from "../pages/Devices";
+
 import AdeRelayChart from "./Chart/AderelayChart";
 import SensorChart from "./Chart/SensorChart";
 import Relay3ChannelsEdit from "../pages/Relay3ChannelsEdit";
@@ -21,6 +21,8 @@ import BuildingSetting from "../pages/BuildingSetting";
 import BuildingChart from "../pages/BuildingChart";
 
 import Adehistory from "./Chart/Adehistory";
+import DeviceSence from "../pages/DeviceSence";
+import Relay3channelSence from "../pages/Relay3ChannelSence";
 
 const drawerWidth = 240;
 
@@ -46,7 +48,6 @@ export default function Main() {
         </Route>
 
         <Route path="device">
-          <Route index element={<Devices />} />
           <Route path=":deviceId/edit" element={<DeviceEdit />} />
         </Route>
 
@@ -60,6 +61,11 @@ export default function Main() {
         <Route path="*" element={<Navigate to="/room" />} />
         <Route path="historty/:deviceId" element={<Adehistory />} />
         <Route path="Alldevice" element={<Alldevice />} />
+        <Route path="Sence/:deviceId" element={<DeviceSence />} />
+        <Route
+          path="Relay3channelSence/:deviceId"
+          element={<Relay3channelSence />}
+        />
       </Routes>
     </Stack>
   );

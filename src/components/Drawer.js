@@ -20,7 +20,6 @@ const drawer = (
     <div>
       <List sx={{ bgcolor: "background.paper" }} component="nav">
         <ListItemLink to="/room" primary={"Rooms"} />
-        <ListItemLink to="/device" primary={"Devices"} />
         <ListItemLink to="/Alldevice" primary={"Alldevice"} />
       </List>
     </div>

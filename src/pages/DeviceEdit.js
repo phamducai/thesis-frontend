@@ -7,14 +7,13 @@ import {
   updateDeviceById,
   getRooms,
   getDeviceById,
-  updateDeviceStatusById,
 } from "../api";
 import { useQuery } from "react-query";
 
 export default function DeviceEdit() {
   const { deviceId } = useParams();
 
-  const { data: device } = useQuery(["device", deviceId], () =>
+  const { data: device } = useQuery(["devicessss", deviceId], () =>
     getDeviceById(deviceId)
   );
   const { data: rooms } = useQuery("rooms", getRooms, { initialData: [] });
@@ -29,7 +28,7 @@ export default function DeviceEdit() {
 
   const handleSave = async () => {
     if (!formData.name && !formData.refRoom) return;
-    updateDeviceStatusById(deviceId);
+;
     await updateDeviceById(deviceId, {
       name: formData.name,
       ...(formData.refRoom && { refRoom: formData.refRoom }),
