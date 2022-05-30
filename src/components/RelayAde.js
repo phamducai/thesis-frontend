@@ -33,7 +33,7 @@ export default function RelayAde() {
       <TableBody>
         {devices.map((device, indexx) => (
           <TableRow key={indexx}>
-            <TableCell>{device.name}</TableCell>
+            <TableCell sx={{ width: 150 }}>{device.name}</TableCell>
             <TableCell>
               <RealtimeStatusButton deviceId={device._id} field="status" />
             </TableCell>
@@ -41,11 +41,11 @@ export default function RelayAde() {
             <TableCell>
               <RealtimeMetric deviceId={device._id} attr="vrms" /> V
             </TableCell>
-            <TableCell>
+            <TableCell sx={{}}>
               <RealtimeMetric deviceId={device._id} attr="irms" /> A
             </TableCell>
             <TableCell>
-              <RealtimeMetric deviceId={device._id} attr="power" /> KW
+              <RealtimeMetric deviceId={device._id} attr="power" /> W
             </TableCell>
 
             <TableCell align="center">
@@ -61,7 +61,7 @@ export default function RelayAde() {
                 color="secondary"
                 variant="contained"
                 component={Link}
-                to={`/Edit/${device._id}`}
+                to={`/EditRelayAde/${device._id}`}
               >
                 <SettingsIcon />
               </Button>

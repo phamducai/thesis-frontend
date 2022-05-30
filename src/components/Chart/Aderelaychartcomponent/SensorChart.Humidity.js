@@ -44,7 +44,9 @@ function SensorChartHumidity() {
 
   return (
     <React.Fragment>
-      <Typography align="center">Humidity</Typography>
+      <Typography align="center" variant="h5">
+        Humidity
+      </Typography>
 
       <ReactApexChart
         options={options}

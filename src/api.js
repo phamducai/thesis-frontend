@@ -31,6 +31,7 @@ export async function addDevice(device) {
   const { data } = await axios.post("/device", device);
   return data;
 }
+//find device
 
 export async function getDevices(options) {
   const { data } = await axios.get("/device", options);

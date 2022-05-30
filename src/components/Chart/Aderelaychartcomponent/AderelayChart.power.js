@@ -11,6 +11,7 @@ function AdeRelayChartPower() {
     initialData: { value: 0, timestamp: "" },
   });
   const [powerArray, setPowerArray] = React.useState(new Array(20).fill(0));
+
   React.useEffect(() => {
     setPowerArray([...powerArray.slice(1), power.value]);
     // eslint-disable-next-line
@@ -18,6 +19,7 @@ function AdeRelayChartPower() {
   const series = [
     {
       name: "Power",
+
       data: powerArray,
     },
   ];
@@ -44,7 +46,9 @@ function AdeRelayChartPower() {
         type="area"
         height={350}
       />{" "}
-      <Typography align="center">Power</Typography>
+      <Typography align="center" variant="h5">
+        Power
+      </Typography>
     </React.Fragment>
   );
 }

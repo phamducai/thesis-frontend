@@ -4,7 +4,7 @@ import AdeRelayChartIrms from "./Aderelaychartcomponent/AderelayChart.Irms";
 import AdeRelayChartPower from "./Aderelaychartcomponent/AderelayChart.power";
 import { getDeviceById } from "../../api";
 
-import { Typography } from "@mui/material";
+import { Typography, Divider } from "@mui/material";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 
@@ -15,9 +15,13 @@ function AdeRelayChart() {
   );
   return (
     <React.Fragment>
-      <Typography align="center">{device?.name}</Typography>
+      <Typography variant="h4" align="center">
+        {device?.name}
+      </Typography>
       <AdeRelayChartVrms />
+      <Divider />
       <AdeRelayChartIrms />
+      <Divider />
       <AdeRelayChartPower />
     </React.Fragment>
   );

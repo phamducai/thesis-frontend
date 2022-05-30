@@ -3,14 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { TextField, Button, Typography, Stack, MenuItem } from "@mui/material";
 
-import {
-  updateDeviceById,
-  getRooms,
-  getDeviceById,
-} from "../api";
+import { updateDeviceById, getRooms, getDeviceById } from "../api";
 import { useQuery } from "react-query";
 
-export default function DeviceEdit() {
+export default function RelayAdeedit() {
   const { deviceId } = useParams();
 
   const { data: device } = useQuery(["devicessss", deviceId], () =>
@@ -28,7 +24,6 @@ export default function DeviceEdit() {
 
   const handleSave = async () => {
     if (!formData.name && !formData.refRoom) return;
-;
     await updateDeviceById(deviceId, {
       name: formData.name,
       ...(formData.refRoom && { refRoom: formData.refRoom }),
@@ -48,7 +43,9 @@ export default function DeviceEdit() {
 
   return (
     <Stack gap={2} sx={{ padding: 2 }}>
-      <Typography variant="h4">Edit device</Typography>
+      <Typography variant="h4" align="center">
+        Edit RelayAde
+      </Typography>
 
       <TextField
         label="Name"

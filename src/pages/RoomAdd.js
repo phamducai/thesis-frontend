@@ -1,14 +1,8 @@
 import React, { useState } from "react";
-import {
-  Stack,
-  Typography,
-  FormControl,
-  InputLabel,
-  Input,
-  Button,
-} from "@mui/material";
+import { Stack, Typography, TextField, Button } from "@mui/material";
 import { addRoom } from "../api";
 import { useNavigate } from "react-router-dom";
+import SaveIcon from "@mui/icons-material/Save";
 
 export default function AddRoom() {
   const initialValue = {
@@ -26,22 +20,20 @@ export default function AddRoom() {
   };
 
   return (
-    <Stack>
+    <Stack gap={2} sx={{ padding: 2 }}>
       <Typography variant="h4">Add Room</Typography>
-      <FormControl>
-        <InputLabel htmlFor="my-input">Room Name</InputLabel>
-        <Input
-          onChange={onValueChange}
-          name="name"
-          value={room.name}
-          id="my-input"
-        />
-        <FormControl>
-          <Button variant="contained" color="primary" onClick={() => Add()}>
-            Add Room
-          </Button>
-        </FormControl>
-      </FormControl>
+
+      <TextField
+        onChange={onValueChange}
+        name="name"
+        value={room?.name}
+        aria-describedby="my-helper-text"
+        label="name"
+        variant="filled"
+      />
+      <Button variant="contained" color="primary" onClick={Add}>
+        <SaveIcon /> Save
+      </Button>
     </Stack>
   );
 }

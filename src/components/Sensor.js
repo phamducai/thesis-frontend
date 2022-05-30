@@ -10,6 +10,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { getDevices, deleteDeviceById } from "../api";
 import { useContextEngine } from "../lib/context-engine";
+import HistoryIcon from "@mui/icons-material/History";
+
 export default function Sensor() {
   const { roomId } = useParams();
   const { data: devices } = useQuery(
@@ -34,26 +36,19 @@ export default function Sensor() {
       <TableBody>
         {devices.map((device, indexx) => (
           <TableRow key={indexx}>
-            <TableCell >{device.name}</TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
+            <TableCell sx={{ width: 324 }}>{device.name}</TableCell>
 
-
-            <TableCell align="center">
-              <RealtimeVoltage deviceId={device._id} attr="temp" />
+            <TableCell sx={{ width: 94 }}>
+              <RealtimeVoltage deviceId={device._id} attr="temp" /> °C
             </TableCell>
-            <TableCell align="center">
-              <RealtimeVoltage deviceId={device._id} attr="humidity" />
+            <TableCell sx={{ width: 96 }}>
+              <RealtimeVoltage deviceId={device._id} attr="humidity" /> %RH
             </TableCell>
-            <TableCell align="center">
-              <RealtimeVoltage deviceId={device._id} attr="airquality" />
+            <TableCell sx={{ width: 258 }}>
+              <RealtimeVoltage deviceId={device._id} attr="airquality" /> ppm
             </TableCell>
 
-
-
-            
-            <TableCell  align="center">
-              
+            <TableCell>
               <Button
                 color="primary"
                 variant="contained"
@@ -66,7 +61,7 @@ export default function Sensor() {
                 color="secondary"
                 variant="contained"
                 component={Link}
-                to={`/Edit/${device._id}`}
+                to={`/EditSensor/${device._id}`}
               >
                 <SettingsIcon />
               </Button>
@@ -76,6 +71,14 @@ export default function Sensor() {
                 onClick={() => handleDelete(device._id)}
               >
                 <DeleteIcon />
+              </Button>
+              <Button
+                color="inherit"
+                variant="contained"
+                component={Link}
+                to={`/Sensorhistory/${device._id}`}
+              >
+                <HistoryIcon />
               </Button>
             </TableCell>
           </TableRow>

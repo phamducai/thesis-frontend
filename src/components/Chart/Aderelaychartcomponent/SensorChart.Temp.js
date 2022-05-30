@@ -39,7 +39,9 @@ function SensorChartTemp() {
 
   return (
     <React.Fragment>
-      <Typography align="center">Temp</Typography>
+      <Typography align="center" variant="h5">
+        Temp
+      </Typography>
 
       <ReactApexChart
         options={options}

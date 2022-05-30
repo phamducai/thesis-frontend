@@ -1,21 +1,18 @@
 import React, { useState } from "react";
-import {
-  Stack,
-  Typography,
-  FormControl,
-  InputLabel,
-  Input,
-  Button,
-} from "@mui/material";
+import { Stack, Typography, Button, TextField } from "@mui/material";
 import { addDevice } from "../api";
 import { useNavigate } from "react-router-dom";
+import SaveIcon from "@mui/icons-material/Save";
+
+const initialValue = {
+  name: "",
+  name1: "",
+  name2: "",
+  type: "",
+  dev_addr: "",
+};
 
 export default function Adddevices() {
-  const initialValue = {
-    name: "",
-    name1: "",
-    name2: "",
-  };
   let navigate = useNavigate();
   const [device, setDevice] = useState(initialValue);
   const onValueChange = (e) => {
@@ -24,44 +21,58 @@ export default function Adddevices() {
 
   const Add = async () => {
     await addDevice(device);
-    navigate("/");
+    navigate("/Alldevice");
   };
 
   return (
-    <Stack>
-      <Typography variant="h4">Add device</Typography>
-      <FormControl>
-        <InputLabel htmlFor="my-input">Device Name</InputLabel>
-        <Input
-          onChange={onValueChange}
-          name="name"
-          value={device.name}
-          id="my-input"
-        />
-        <FormControl>
-          <InputLabel htmlFor="my-input">Device Name1</InputLabel>
-          <Input
-            onChange={onValueChange}
-            name="name"
-            value={device.name1}
-            id="my-input"
-          />
-        </FormControl>
-        <FormControl>
-          <InputLabel htmlFor="my-input">Device Name2</InputLabel>
-          <Input
-            onChange={onValueChange}
-            name="name"
-            value={device.name2}
-            id="my-input"
-          />
-        </FormControl>
-        <FormControl>
-          <Button variant="contained" color="primary" onClick={() => Add()}>
-            Add device
-          </Button>
-        </FormControl>
-      </FormControl>
+    <Stack gap={2} sx={{ padding: 2 }}>
+      <Typography variant="h4">Edit device</Typography>
+
+      <TextField
+        onChange={onValueChange}
+        name="name"
+        label="name"
+        value={device?.name}
+        variant="filled"
+        aria-describedby="my-helper-text"
+      />
+
+      <TextField
+        onChange={onValueChange}
+        name="name1"
+        label="name1"
+        value={device?.name1}
+        variant="filled"
+        aria-describedby="my-helper-text"
+      />
+      <TextField
+        onChange={onValueChange}
+        name="name2"
+        label="name2"
+        value={device?.name2}
+        variant="filled"
+        aria-describedby="my-helper-text"
+      />
+      <TextField
+        onChange={onValueChange}
+        name="type"
+        label="type"
+        value={device?.type}
+        variant="filled"
+        aria-describedby="my-helper-text"
+      />
+      <TextField
+        onChange={onValueChange}
+        name="dev_addr"
+        label="dev_addr"
+        value={device?.dev_addr}
+        variant="filled"
+        aria-describedby="my-helper-text"
+      />
+
+      <Button variant="contained" color="primary" onClick={Add}>
+        <SaveIcon /> Save
+      </Button>
     </Stack>
   );
 }

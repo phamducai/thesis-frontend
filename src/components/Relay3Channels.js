@@ -48,7 +48,7 @@ export default function Relay3Channel() {
       <TableBody>
         {devices.map((device, index) => (
           <TableRow key={index}>
-            <TableCell>{device.name}</TableCell>
+            <TableCell sx={{ width: 164 }}>{device.name}</TableCell>
 
             <TableCell padding="none">
               <RealtimeStatusButton deviceId={device._id} field="status1" />
@@ -59,7 +59,7 @@ export default function Relay3Channel() {
               <RealtimeStatusButton deviceId={device._id} field="status2" />
             </TableCell>
             <TableCell>{device?.name2}</TableCell>
-            <TableCell padding="none">
+            <TableCell sx={{ width: 204 }} padding="none">
               <RealtimeStatusButton deviceId={device._id} field="status3" />
             </TableCell>
             <TableCell>
@@ -67,7 +67,7 @@ export default function Relay3Channel() {
                 color="secondary"
                 variant="contained"
                 component={Link}
-                to={`/Edit/${device._id}`}
+                to={`/EditRelay3channels/${device._id}`}
               >
                 <SettingsIcon />
               </Button>

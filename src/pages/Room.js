@@ -24,7 +24,9 @@ export default function Room() {
         padding: 2,
       }}
     >
-      <Typography align="center">{room?.name}</Typography>
+      <Typography align="center" variant="h3">
+        {room?.name}
+      </Typography>
       <Paper>
         <AdeRoom />
       </Paper>

@@ -45,7 +45,9 @@ function AdeRelayChartIrms() {
         type="area"
         height={350}
       />{" "}
-      <Typography align="center">Irms</Typography>
+      <Typography align="center" variant="h5">
+        Irms
+      </Typography>
     </React.Fragment>
   );
 }

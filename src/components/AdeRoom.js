@@ -1,14 +1,11 @@
 import React from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { Link, useParams } from "react-router-dom";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Button,
-  ListItemIcon,
-} from "@mui/material";
+import { Table, TableBody, TableCell, TableRow, Button } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import SettingsIcon from "@mui/icons-material/Settings";
+
+import HistoryIcon from "@mui/icons-material/History";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { getDevices, deleteDeviceById } from "../api";
 import { useContextEngine } from "../lib/context-engine";
@@ -33,16 +30,18 @@ export default function AdeRoom() {
       <TableBody>
         {devices.map((device, indexxxx) => (
           <TableRow key={indexxxx}>
-            <TableCell>{device.name}</TableCell>
-            <TableCell>
-              <RealtimeVoltage deviceId={device._id} attr="vrms" />
+            <TableCell sx={{ width: 324 }}>{device.name}</TableCell>
+
+            <TableCell sx={{ width: 94 }}>
+              <RealtimeVoltage deviceId={device._id} attr="vrms" /> V
             </TableCell>
-            <TableCell>
-              <RealtimeVoltage deviceId={device._id} attr="irms" />
+            <TableCell sx={{ width: 94 }}>
+              <RealtimeVoltage deviceId={device._id} attr="irms" /> A
             </TableCell>
-            <TableCell>
-              <RealtimeVoltage deviceId={device._id} attr="energy" />
+            <TableCell sx={{ width: 260 }}>
+              <RealtimeVoltage deviceId={device._id} attr="energy" /> KW
             </TableCell>
+
             <TableCell>
               <Button
                 color="primary"
@@ -50,9 +49,7 @@ export default function AdeRoom() {
                 component={Link}
                 to={`/Ade/${device._id}`}
               >
-                <ListItemIcon>
-                  <VisibilityIcon />
-                </ListItemIcon>
+                <VisibilityIcon />
               </Button>
               <Button
                 color="secondary"
@@ -60,22 +57,22 @@ export default function AdeRoom() {
                 component={Link}
                 to={`/device/${device._id}/edit`}
               >
-                Edit
+                <SettingsIcon />
               </Button>
               <Button
                 color="error"
                 variant="contained"
                 onClick={() => handleDelete(device.dev_addr)}
               >
-                Delete
+                <DeleteIcon />
               </Button>
               <Button
-                color="primary"
+                color="inherit"
                 variant="contained"
                 component={Link}
                 to={`/historty/${device._id}`}
               >
-                History Room
+                <HistoryIcon />
               </Button>
             </TableCell>
           </TableRow>

@@ -42,7 +42,9 @@ function SensorChartAirquality() {
   };
   return (
     <React.Fragment>
-      <Typography align="center">Airquality</Typography>
+      <Typography align="center" variant="h5">
+        Airquality
+      </Typography>
 
       <ReactApexChart
         options={options}

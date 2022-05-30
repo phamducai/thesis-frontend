@@ -9,11 +9,15 @@ import Room from "../pages/Room";
 import RoomEdit from "../pages/RoomEdit";
 
 import Adddevices from "../pages/Deviceadd";
-import DeviceEdit from "../pages/DeviceEdit";
+
+import Relay3ChannelsEdit from "../pages/Relay3ChannelsEdit";
+import SensorEdit from "../pages/SensorEdit";
+import RelayAdeedit from "../pages/RelayAdeedit";
 
 import AdeRelayChart from "./Chart/AderelayChart";
 import SensorChart from "./Chart/SensorChart";
-import Relay3ChannelsEdit from "../pages/Relay3ChannelsEdit";
+import Sensorhistory from "./Chart/SensorHistory";
+
 import Alldevice from "./alldevice/Alldevice";
 
 import BuildingSetting from "../pages/BuildingSetting";
@@ -45,13 +49,17 @@ export default function Main() {
           <Route path="add" element={<RoomAdd />} />
         </Route>
 
-        <Route path="device">
-          <Route path=":deviceId/edit" element={<DeviceEdit />} />
-        </Route>
+        <Route path="EditRelayAde/:deviceId" element={<RelayAdeedit />} />
+        <Route path="EditSensor/:deviceId" element={<SensorEdit />} />
+        <Route
+          path="EditRelay3channels/:deviceId"
+          element={<Relay3ChannelsEdit />}
+        />
 
         <Route path="Ade/:deviceId" element={<AdeRelayChart />} />
         <Route path="Sensor/:deviceId" element={<SensorChart />} />
-        <Route path="Edit/:deviceId" element={<Relay3ChannelsEdit />} />
+        <Route path="Sensorhistory/:deviceId" element={<Sensorhistory />} />
+
         <Route path="building-setting" element={<BuildingSetting />} />
 
         <Route path="*" element={<Navigate to="/room" />} />

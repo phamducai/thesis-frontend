@@ -53,7 +53,6 @@ export default function Relay3ChannelsEdit() {
   let navigate = useNavigate();
 
   const editDevice = async () => {
-    // return console.log(device);
     await updateDeviceById(deviceId, device);
 
     navigate(`/room/${device.refRoom}`);
@@ -68,6 +67,7 @@ export default function Relay3ChannelsEdit() {
         name="name"
         value={device?.name}
         aria-describedby="my-helper-text"
+        variant="outlined"
       />
 
       <TextField
@@ -75,12 +75,14 @@ export default function Relay3ChannelsEdit() {
         name="name1"
         value={device?.name1}
         aria-describedby="my-helper-text"
+        variant="outlined"
       />
       <TextField
         onChange={onValueChange}
         name="name2"
         value={device?.name2}
         aria-describedby="my-helper-text"
+        variant="outlined"
       />
 
       <FormControl fullWidth>

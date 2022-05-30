@@ -1,7 +1,6 @@
 import React from "react";
-import { useQuery, useMutation, useQueryClient } from "react-query";
 
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import {
   Stack,
@@ -9,37 +8,17 @@ import {
   Box,
   TextField,
   InputAdornment,
-  TableBody,
-  TableRow,
-  TableCell,
-  Table,
-  TableHead,
+  Typography,
+  Divider,
 } from "@mui/material";
-import SettingsIcon from "@mui/icons-material/Settings";
 
-import RoomNameTableCell from "../RoomNameTableCell";
-import { getDevices, deleteDeviceById, sendAddDeviceCommand } from "../../api";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { sendAddDeviceCommand } from "../../api";
+
+import Relayadecomponet from "./Relayadecomponet";
+import Sensorcomponenent from "./Sensorcomponent";
+import Relay3channelcomponent from "./Relay3channelcomponent";
 
 export default function Alldevice() {
-  const { deviceId } = useParams();
-
-  const { data: devices } = useQuery(
-    "devicess",
-    () => getDevices(deviceId, "devicess"),
-    { initialData: [] }
-  );
-
-  const queryClient = useQueryClient();
-  const mutation = useMutation(deleteDeviceById, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("devicess");
-    },
-  });
-
-  function handleDelete(deviceId) {
-    mutation.mutate(deviceId);
-  }
   const SearchBar = (
     <Stack direction="row" padding={1} spacing={1}>
       <Box>
@@ -47,19 +26,24 @@ export default function Alldevice() {
           placeholder="Search by room name"
           size="small"
           InputProps={{
-            startAdornment: <InputAdornment position="start"></InputAdornment>,
+            startAdornment: (
+              <InputAdornment
+                position="start"
+                onClick={sendAddDeviceCommand}
+              ></InputAdornment>
+            ),
           }}
         />
       </Box>
       <Box sx={{ flex: 1 }}></Box>
-
       <Button variant="contained" onClick={sendAddDeviceCommand}>
         Add Device
       </Button>
       <Button
         variant="contained"
         color="secondary"
-        onClick={sendAddDeviceCommand}
+        component={Link}
+        to={"/Adddevice"}
       >
         Add Demo
       </Button>
@@ -67,55 +51,23 @@ export default function Alldevice() {
   );
 
   return (
-    <Stack
-      sx={{
-        height: 1,
-        bgcolor: "background.default",
-        overflow: "auto",
-        padding: 2,
-      }}
-    >
-      {SearchBar}
-
-      <Table>
-        <TableHead>
-          <TableCell>Name</TableCell>
-          <TableCell>name1</TableCell>
-          <TableCell>Name2</TableCell>
-          <TableCell>Device Type </TableCell>
-          <TableCell>ROOM</TableCell>
-          <TableCell>ACTION</TableCell>
-        </TableHead>
-        <TableBody>
-          {devices.map((device, index) => (
-            <TableRow key={index}>
-              <TableCell>{device.name}</TableCell>
-              <TableCell>{device?.name1}</TableCell>
-              <TableCell>{device?.name2}</TableCell>
-              <TableCell>{device?.type}</TableCell>
-              <RoomNameTableCell roomId={device?.refRoom} />
-              <TableCell>
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  component={Link}
-                  to={`/Edit/${device._id}`}
-                >
-                  {" "}
-                  <SettingsIcon />
-                </Button>
-                <Button
-                  color="error"
-                  variant="contained"
-                  onClick={() => handleDelete(device._id)}
-                >
-                  <DeleteIcon />
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Stack>
+    <React.Fragment>
+      <Typography variant="h3" align="center">
+        Devices
+      </Typography>
+      <Stack
+        sx={{
+          bgcolor: "background.default",
+          overflow: "auto",
+        }}
+      >
+        {SearchBar}
+        <Relayadecomponet />
+        <Divider />
+        <Sensorcomponenent />
+        <Divider />
+        <Relay3channelcomponent />
+      </Stack>
+    </React.Fragment>
   );
 }
