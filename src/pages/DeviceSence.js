@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 
-import { getDeviceById, sendCommand } from "../api";
+import { getDeviceById, sendCommand, getRoomById, addTimer } from "../api";
 import { LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
@@ -19,7 +19,7 @@ import {
 import { TimePicker } from "@mui/lab";
 
 import Box from "@mui/material/Box";
-import FormLabel from "@mui/material/FormLabel";
+
 import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -50,7 +50,7 @@ export default function DeviceSence() {
     sendCommand(deviceId, {
       timeOn: selectedTime && selectedTime.toLocaleTimeString(),
       timeOff: selectedTimeto && selectedTimeto.toLocaleTimeString(),
-      weekday: state,
+      state,
     });
   }
 
@@ -63,9 +63,23 @@ export default function DeviceSence() {
 
   const { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday } =
     state;
+  const roomId = device?.refRoom;
+  const { data: room } = useQuery(["romNames", roomId], () =>
+    getRoomById(roomId)
+  );
+  let navigate = useNavigate();
+  const Add = async () => {
+    await addTimer(selectedTime);
+
+    navigate(`/Sence/${device._id}`);
+    console.log(selectedTime);
+  };
 
   return (
     <React.Fragment>
+      <Typography variant="h3" align="center">
+        {room?.name}
+      </Typography>
       <Typography variant="h4" align="center">
         {" "}
         {device?.name}
@@ -103,22 +117,12 @@ export default function DeviceSence() {
               </LocalizationProvider>
             </TableCell>
             <TableCell>
-              <Button
-                onClick={() => handlealert(device._id)}
-                variant="contained"
-              >
-                {" "}
-                Save
-              </Button>
-            </TableCell>
-            <TableCell>
               <Box sx={{ display: "flex" }}>
                 <FormControl
                   sx={{ m: 3 }}
                   component="fieldset"
                   variant="standard"
                 >
-                  <FormLabel component="legend">Timer</FormLabel>
                   <FormGroup row={true}>
                     <FormControlLabel
                       control={
@@ -191,6 +195,17 @@ export default function DeviceSence() {
                       label="Sunday"
                     />
                   </FormGroup>
+                  <Button
+                    onClick={() => handlealert(device._id)}
+                    variant="contained"
+                  >
+                    {" "}
+                    Save
+                  </Button>
+                  <Button onClick={Add} variant="contained">
+                    {" "}
+                    Save
+                  </Button>
                 </FormControl>
               </Box>
             </TableCell>

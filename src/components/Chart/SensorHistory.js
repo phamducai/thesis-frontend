@@ -2,7 +2,7 @@ import React from "react";
 
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
-import { getDeviceById } from "../../api";
+import { getDeviceById, getRoomById } from "../../api";
 import { Typography, Divider } from "@mui/material";
 import SenTemp from "./Adehistorycomponent/SenTemp";
 import SenHumidity from "./Adehistorycomponent/SenHumidity";
@@ -13,9 +13,15 @@ function Sensorhistory() {
   const { data: device } = useQuery(["devicessssss", deviceId], () =>
     getDeviceById(deviceId)
   );
-
+  const roomId = device?.refRoom;
+  const { data: room } = useQuery(["roomNames", roomId], () =>
+    getRoomById(roomId)
+  );
   return (
     <React.Fragment>
+      <Typography variant="h3" align="center">
+        {room?.name}
+      </Typography>
       <Typography variant="h4" align="center">
         {device?.name}
       </Typography>

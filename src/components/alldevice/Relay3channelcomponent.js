@@ -10,6 +10,7 @@ import {
   TableRow,
   TableCell,
   Table,
+  List,
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 
@@ -45,10 +46,12 @@ export default function Relay3channelcomponent() {
           <TableBody>
             {devices.map((device, index) => (
               <TableRow key={index}>
-                <TableCell>{device.name}</TableCell>
-                <TableCell>{device?.name1}</TableCell>
-                <TableCell>{device?.name2}</TableCell>
-                <TableCell>{device?.type}</TableCell>
+                <List>
+                  <TableCell>channel 1: {device.name}</TableCell>
+                  <TableCell>{device?.name1}</TableCell>
+                  <TableCell>{device?.name2}</TableCell>
+                  <TableCell>{device?.type}</TableCell>
+                </List>
                 <RoomNameTableCell roomId={device?.refRoom} />
                 <TableCell>
                   <Button

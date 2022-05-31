@@ -4,45 +4,53 @@ import ReactApexChart from "react-apexcharts";
 import { useParams } from "react-router-dom";
 import { useContextEngine } from "../../../lib/context-engine";
 import { Typography } from "@mui/material";
+
+const XAXISRANGE = 60 * 1000;
+
+const options = {
+  chart: {
+    animations: {
+      enabled: true,
+      easing: "linear",
+      dynamicAnimation: { speed: 1000 },
+    },
+    toolbar: { show: false },
+    zoom: { enabled: false },
+  },
+  dataLabels: { enabled: false },
+  stroke: { curve: "smooth" },
+  title: { text: "Realtime Chart", align: "left" },
+  markers: { size: 0 },
+  xaxis: {
+    type: "datetime",
+    range: XAXISRANGE,
+  },
+  yaxis: { max: 300 },
+  legend: { show: false },
+};
+
 function AdeRelayChartIrms() {
   const { deviceId } = useParams();
 
   const { data: irms } = useContextEngine(`telemetry.${deviceId}.irms`, {
-    initialData: { value: 0, timestamp: "" },
+    initialData: { value: 0, timestamp: new Date() },
   });
-  const [irmsArray, setIrmsArray] = React.useState(new Array(20).fill(0));
+
+  const [irmsArray, setIrmsArray] = React.useState([]);
+
   React.useEffect(() => {
-    setIrmsArray([...irmsArray.slice(1), irms.value]);
+    setIrmsArray([...irmsArray, { y: irms.value, x: irms.timestamp }]);
+
     // eslint-disable-next-line
   }, [irms]);
-  const series = [
-    {
-      name: "Irms",
-      data: irmsArray,
-    },
-  ];
-  const options = {
-    chart: {
-      animations: {
-        enabled: false,
-      },
-      height: 350,
-      type: "area",
-      dataLabels: {
-        enabled: false,
-      },
-    },
-    stroke: {
-      curve: "smooth",
-    },
-  };
+  const series = [{ data: irmsArray }];
 
   return (
     <React.Fragment>
       <ReactApexChart
         options={options}
         series={series}
-        type="area"
+        type="line"
         height={350}
       />{" "}
       <Typography align="center" variant="h5">

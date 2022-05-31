@@ -10,12 +10,21 @@ import AdePower from "./Adehistorycomponent/AdePower";
 
 function Adehistory() {
   const { deviceId } = useParams();
+
   const { data: device } = useQuery(["devicessssss", deviceId], () =>
     getDeviceById(deviceId)
+  );
+  const roomId = device?.refRoom;
+  const { data: room } = useQuery(["roomNames", roomId], () =>
+    getRoomById(roomId)
   );
 
   return (
     <React.Fragment>
+      <Typography variant="h3" align="center">
+        {room?.name}
+      </Typography>
+
       <Typography variant="h4" align="center">
         {device?.name}
       </Typography>

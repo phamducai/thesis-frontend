@@ -60,7 +60,9 @@ export default function Relay3ChannelsEdit() {
 
   return (
     <Stack gap={2} sx={{ padding: 2 }}>
-      <Typography variant="h4">Edit device</Typography>
+      <Typography variant="h4" align="center">
+        Edit Relay3Channel
+      </Typography>
 
       <TextField
         onChange={onValueChange}

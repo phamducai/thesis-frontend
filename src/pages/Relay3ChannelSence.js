@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 
-import { getDeviceById, sendCommand } from "../api";
+import { getDeviceById, sendCommand, getRoomById } from "../api";
 import { LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
@@ -19,7 +19,6 @@ import {
 import { TimePicker } from "@mui/lab";
 
 import Box from "@mui/material/Box";
-import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -72,8 +71,16 @@ export default function Relay3channelSence() {
   const handleStatus1 = () => setStatus1(!status1);
   const handleStatus2 = () => setStatus2(!status2);
   const handleStatus3 = () => setStatus3(!status3);
+  const roomId = device?.refRoom;
+  const { data: room } = useQuery(["romNames", roomId], () =>
+    getRoomById(roomId)
+  );
+
   return (
     <React.Fragment>
+      <Typography variant="h3" align="center">
+        {room?.name}
+      </Typography>
       <Typography align="center" variant="h4">
         {device?.name}
       </Typography>
@@ -123,7 +130,6 @@ export default function Relay3channelSence() {
                   component="fieldset"
                   variant="standard"
                 >
-                  <FormLabel component="legend">Timer</FormLabel>
                   <FormGroup row={true}>
                     <FormControlLabel
                       control={
@@ -205,7 +211,7 @@ export default function Relay3channelSence() {
                           name="status1"
                         />
                       }
-                      label="Relay1"
+                      label={device?.name}
                     />
                     <FormControlLabel
                       control={
@@ -215,7 +221,7 @@ export default function Relay3channelSence() {
                           name="status2"
                         />
                       }
-                      label="Relay2"
+                      label={device?.name1}
                     />
                     <FormControlLabel
                       control={
@@ -225,7 +231,7 @@ export default function Relay3channelSence() {
                           name="status3"
                         />
                       }
-                      label="Relay3"
+                      label={device?.name2}
                     />
                   </FormGroup>
                   <Button

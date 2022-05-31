@@ -105,3 +105,29 @@ export async function sendCommand(id, commandObject) {
   return data;
 }
 //commane
+
+//timerr
+export async function addTimer(state) {
+  const { data } = await axios.post("/timer");
+  return data;
+}
+
+export async function getTimes() {
+  const { data } = await axios.get("/timer");
+  return data;
+}
+
+export async function getTimeById(timerId) {
+  const { data } = await axios.get("/timer/" + timerId);
+  return data;
+}
+
+export async function updateTimeById({ id, payload }) {
+  const { data } = await axios.patch("/timer/" + id, payload);
+  return data;
+}
+
+export async function deleteTimerById(timerId) {
+  const { data } = await axios.delete("/timer/" + timerId);
+  return data;
+}
