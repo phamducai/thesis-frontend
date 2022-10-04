@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// Room
+// roms
 export async function addRoom(room) {
   const { data } = await axios.post("/room", room);
   return data;
